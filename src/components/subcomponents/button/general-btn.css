@@ -1,0 +1,15 @@
+.general-btn {
+    width: 230px;
+    height: 3rem;
+    color: white;
+    font-size: 21px;
+    border: 0;
+}
+
+.choose {
+    background: #1C69D4;
+}
+
+.manual {
+    background: #666666;
+}

@@ -1,0 +1,16 @@
+.flow-input {
+    height: 3rem;
+    border-bottom: 1px solid black;
+}
+
+.flow-input input {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+::placeholder {
+    color: black;
+    opacity: 1;
+}

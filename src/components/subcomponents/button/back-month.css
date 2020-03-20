@@ -1,0 +1,18 @@
+.back-month {
+    width: 125px;
+    height: 46px;
+    cursor: pointer;
+    border: 0;
+    background: none;
+    margin: auto;
+    font-weight: bold;
+}
+
+.icon {
+    color: #1C69D4;
+}
+
+.month-text {
+    margin-left: 15px;
+    font-size: 17px;
+}

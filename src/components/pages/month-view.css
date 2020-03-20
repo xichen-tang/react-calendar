@@ -1,0 +1,13 @@
+.month-view {
+    height: 700px;
+    overflow: auto;
+}
+
+.title {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.month {
+    padding-left: 60px;
+}

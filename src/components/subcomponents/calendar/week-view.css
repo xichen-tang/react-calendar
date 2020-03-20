@@ -1,0 +1,29 @@
+.week-view {
+    height: 50px;
+    border-top: 1px solid #e6e6e6;
+    position: absolute;
+    width: 85%;
+    padding-left: 36px;
+    padding-top: 6px;
+}
+
+.day {
+    padding-top: 8px;
+    width: 37px;
+    height: 37px;
+}
+
+.week-no {
+    font-size: 10px;
+    font-weight: bold;
+    left: -15px;
+    top: -8px;
+    position: absolute;
+}
+
+.selected {
+    border-radius: 50%;
+    color: white;
+    background: #1C69D4;
+    font-weight: bold;
+}

@@ -1,0 +1,25 @@
+.rotated-header {
+    border-bottom: 1px solid black;
+    position: absolute;
+    right: 45px;
+    bottom: 0;
+    transform: rotate(90deg);
+    transform-origin: 100%;
+    width: 145%;
+}
+
+.title {
+    width: 40%;
+    margin-left: 8px;
+}
+
+.rotated-header button {
+    width: 230px;
+    height: 3rem;
+    color: white;
+    font-size: 21px;
+    border: 0;
+    background: #1C69D4;
+    position: absolute;
+    right: 0;
+}
