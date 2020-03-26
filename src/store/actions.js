@@ -2,7 +2,8 @@ import {
   ADD_TIME_SLOTS_SUCCESS,
   ADD_TIME_SLOTS_FAILURE,
   ADD_TIME_SLOTS_STARTED,
-  PAGE_NAVIGATION
+  PAGE_NAVIGATION,
+  SAVE_DATE
 } from "./types";
 import axios from "axios";
 
@@ -24,6 +25,11 @@ export const getAvailableTimeSlots = () => {
 export const setPageID = id => ({
   type: PAGE_NAVIGATION,
   payload: id
+});
+
+export const setDate = date => ({
+  type: SAVE_DATE,
+  payload: date
 });
 
 export const addTimeSlotStarted = () => ({

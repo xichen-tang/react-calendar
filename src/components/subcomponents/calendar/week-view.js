@@ -1,12 +1,24 @@
 import React, { createRef } from "react";
-import "./week-view.css";
+import { connect } from "react-redux";
+import { setDate } from "../../../store/actions";
+import { DAYS_LIST_IN_WEEK as days } from "../../constant";
 import moment from "moment";
 
-export default class DayView extends React.Component {
+class WeekView extends React.Component {
   daysRef = createRef();
 
+  componentDidMount() {
+    // this.initStyleDay(); // select day automatically
+  }
+
+  initStyleDay() {
+    const id = this.getDaysFromWeek(this.props.week).indexOf(this.props.day);
+    if (!id) return;
+    this.daysRef.current.children[id].classList.add("selected");
+  }
+
   getDaysFromWeek = week => {
-    return [...Array(7).keys()].map(d =>
+    return days.map(d =>
       moment()
         .week(week)
         .day(d)
@@ -14,11 +26,16 @@ export default class DayView extends React.Component {
     );
   };
 
-  onDayClicked = id => {
+  onDayClicked = (id, day) => {
     const count = this.daysRef.current.getElementsByClassName("selected")
       .length;
     if (count > 0) this.clearDayStyle();
     this.daysRef.current.children[id].classList.add("selected");
+
+    const year = moment(this.props.selectedDate).year();
+    const month = moment(this.props.selectedDate).month();
+    const date = moment(new Date(year, month, day)).format("MM/DD/YYYY");
+    this.props.setDate(date);
   };
 
   clearDayStyle = () => {
@@ -43,7 +60,7 @@ export default class DayView extends React.Component {
             <div
               key={id}
               className="position-absolute day"
-              onClick={() => this.onDayClicked(id)}
+              onClick={() => this.onDayClicked(id, day)}
               style={styleDayPosition(id)}
             >
               {day}
@@ -54,3 +71,17 @@ export default class DayView extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    selectedDate: state.selectedDate
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setDate: date => dispatch(setDate(date))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeekView);

@@ -1,21 +1,35 @@
 import React from "react";
-import StartButton from "../subcomponents/button/start-button";
-import { buttonLabels } from "../constant";
+import { BUTTON_LABELS } from "../constant";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
 
 class StartPage extends React.Component {
   render() {
+    const AddAppointmentButton = (
+      <div className="d-flex justify-content-center start-button">
+        <button
+          onClick={this.props.onClickAddAppointment}
+          className="main-btn border-0"
+        >
+          {BUTTON_LABELS.addAppointment}
+        </button>
+      </div>
+    );
+
+    const StartCalendarButton = (
+      <div className="d-flex justify-content-center start-button">
+        <button
+          onClick={this.props.onStartCalendar}
+          className="main-btn border-0"
+        >
+          {BUTTON_LABELS.startCalendar}
+        </button>
+      </div>
+    );
     return (
       <>
-        <StartButton
-          onClick={this.props.onClickAddAppointment}
-          label={buttonLabels[0]}
-        />
-        <StartButton
-          onClick={this.props.onStartCalendar}
-          label={buttonLabels[1]}
-        />
+        {AddAppointmentButton}
+        {StartCalendarButton}
       </>
     );
   }

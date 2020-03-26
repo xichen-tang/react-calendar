@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'BMWTypeNextThin';
+    src: local('BMWTypeNextThin'), url(./fonts/WOFF_Webfonts/BMWTypeNextTT-Thin.woff) format('woff'),
+        url(./fonts/WOFF2_Webfonts/BMWTypeNext-Thin.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'BMWTypeNextRegular';
+    src: local('BMWTypeNextRegular'), url(./fonts/WOFF_Webfonts/BMWTypeNextTT-Regular.woff) format('woff'),
+        url(./fonts/WOFF2_Webfonts/BMWTypeNext-Regular.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'BMWTypeNextLight';
+    src: local('BMWTypeNextLight'), url(./fonts/WOFF_Webfonts/BMWTypeNextTT-Light.woff) format('woff'),
+        url(./fonts/WOFF2_Webfonts/BMWTypeNext-Light.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'BMWTypeNextBold';
+    src: local('BMWTypeNextBold'), url(./fonts/WOFF_Webfonts/BMWTypeNextTT-Bold.woff) format('woff'),
+        url(./fonts/WOFF2_Webfonts/BMWTypeNext-Bold.woff2) format('woff2');
+}

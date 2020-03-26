@@ -1,4 +1,18 @@
-export const months = [
+import moment from "moment";
+
+export const HEADERS = {
+  testDriveDate: "Hvornår skal kunden prøvekøre?",
+  enterDriverCPR: "Skriv førerens CPR-nummer",
+  manualDriverInfo: "Skriv førerens oplysninger manuelt",
+  missingInformation: "Indtast de manglende oplysninger",
+  enterSamplePlateToMount: "Indtast den prøveplade du vil montere på bilen",
+  takePicture: "Vi skal bruge et billede af kørekortet",
+  flipPhoneToSign: "Vend telefonen om for at underskrive køresedlen",
+  termsAndConditions: "Det her er vigtigt! Betingelser og samtykke",
+  done: "Færdig!"
+};
+
+export const DANISH_MONTHS = [
   "Januar",
   "Februar",
   "Marts",
@@ -13,7 +27,7 @@ export const months = [
   "December"
 ];
 
-export const weeks = [
+export const DANISH_WEEKS = [
   "Mandag",
   "Tirsdag",
   "Onsdag",
@@ -23,76 +37,82 @@ export const weeks = [
   "Søndag"
 ];
 
-export const buttonLabels = ["Add appointment", "Start Calendar"];
+export const ONE_LETTER_WEEKS = ["M", "T", "C", "T", "F", "L", "S"];
 
-export const pageIDs = [
-  {
-    PAGE_ID: 0,
-    PAGE_VALUE: "PAGE_START"
-  },
-  {
-    PAGE_ID: 1,
-    PAGE_VALUE: "PAGE_MONTH_VIEW_1"
-  },
-  {
-    PAGE_ID: 2,
-    PAGE_VALUE: "PAGE_DAY_VIEW_1"
-  },
-  {
-    PAGE_ID: 3,
-    PAGE_VALUE: "PAGE_NEW_APPOINTMENT"
-  },
-  {
-    PAGE_ID: 4,
-    PAGE_VALUE: "PAGE_APPOINTMENT_1"
-  },
-  {
-    PAGE_ID: 5,
-    PAGE_VALUE: "PAGE_APPOINTMENT_2"
-  },
-  {
-    PAGE_ID: 6,
-    PAGE_VALUE: "PAGE_APPOINTMENT_3"
-  },
+export const DAYS_LIST_IN_WEEK = [1, 2, 3, 4, 5, 6, 7];
 
-  {
-    PAGE_ID: 7,
-    PAGE_VALUE: "PAGE_MONTH_VIEW_2"
-  },
-  {
-    PAGE_ID: 8,
-    PAGE_VALUE: "PAGE_DAY_VIEW_2"
-  },
-  {
-    PAGE_ID: 9,
-    PAGE_VALUE: "PAGE_SEARCH_CUSTOMER"
-  },
-  {
-    PAGE_ID: 10,
-    PAGE_VALUE: "PAGE_ENTER_CUSTOMER_MANUALLY"
-  },
-  {
-    PAGE_ID: 11,
-    PAGE_VALUE: "PAGE_CHOOSE_LICENSE_UPDATE"
-  },
-  {
-    PAGE_ID: 12,
-    PAGE_VALUE: "PAGE_LAST_INFORMATIONS"
-  },
-  {
-    PAGE_ID: 13,
-    PAGE_VALUE: "PAGE_PICTURE"
-  },
-  {
-    PAGE_ID: 14,
-    PAGE_VALUE: "PAGE_TERMS_AND_CONDITIONS"
-  },
-  {
-    PAGE_ID: 15,
-    PAGE_VALUE: "PAGE_SIGNATURE"
-  },
-  {
-    PAGE_ID: 16,
-    PAGE_VALUE: "PAGE_DONE"
-  }
-];
+export const CURRENT_DATE_FORMAT = {
+  year: moment().year(),
+  month: moment().month(),
+  week: moment().day(),
+  day: moment().date(),
+  weekNo: moment().week()
+};
+
+export const DAYS_INDEX = {
+  Mon: 0,
+  Tue: 1,
+  Wed: 2,
+  Thu: 3,
+  Fri: 4,
+  Sat: 5,
+  Sun: 6
+};
+
+export const SUB_HEADERS = {
+  latestLicensePlates: "Seneste anvendte prøveplader",
+  termsAndConditions: "Vilkår og betingelser"
+};
+export const INPUT_LABELS = {
+  ssn: "CPR-nummer",
+  name: "Navn Navnesen",
+  address: "Adresse",
+  cityZipcode: "Postnr By",
+  phone: "Telefonnummer",
+  email: "E-mailadresse",
+  duration: "Varighed (Normalt 30 min)",
+  firstName: "Navn",
+  lastName: "Efternavn",
+  street: "Gade",
+  house: "Husnummer",
+  zipCode: "Postnummer",
+  city: "By",
+  samplePlate: "Prøveplade"
+};
+
+export const BUTTON_LABELS = {
+  addAppointment: "Add appointment",
+  startCalendar: "Start Calendar",
+  private: "Privat",
+  advanced: "Erhverv",
+  continue: "Fortsæt",
+  addMoreDrivers: "Tilføj flere førere",
+  search: "Søg",
+  manual: "Manuel indtastning",
+  camera: "Kamera",
+  close: "Luk",
+  yes: "Ja",
+  no: "Nej",
+  saveAndClose: "Gem og luk"
+};
+
+export const DESCRIPTIONS = {
+  takePicture:
+    "Vi skal kunne dokumentere prøvekørslen overfor de ansvarlige myndigheder og derfor skal vi bede dig om, at tage et billede af førerens kørekort med kameraet i din smartphone.",
+  success:
+    "Prøvekørslen er nu oprettet og køresedlen er sendt som en SMS til det oplyste telefonnummer.",
+  termsAndConditions: [
+    "Vi vil gerne have lov til at kontakte dig efter din prøvekørsel, for at følge op på din oplevelse, og sende vores nyhedsbrev, med nyheder, tilbud og artikler fra BMW.",
+    "Herudover indsamler vi data til brug for dokumentation og analyse.",
+    "Ovenstående er det grundlæggende i vores Vilkår og Betingelser.",
+    "Du kan læse mere om vores vilkår og betingelser her.",
+    "Vil Du acceptere vores vilkår og betingelser?"
+  ]
+};
+
+export const BUTTON_MODES = {
+  confirm: "confirm",
+  manual: "manual",
+  private: "private",
+  advanced: "advanced"
+};

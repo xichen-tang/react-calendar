@@ -2,7 +2,6 @@ import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { setPageID } from "../../../store/actions";
-import "./time-slot.css";
 
 class TimeSlots extends React.Component {
   timeSlots() {

@@ -1,12 +1,19 @@
 import React from "react";
-import "./month-line.css";
-import { months } from "../../constant";
-import moment from "moment";
-import { setPageID } from "../../../store/actions";
+import { DANISH_MONTHS as months, DAYS_INDEX as days } from "../../constant";
+import { setDate, setPageID } from "../../../store/actions";
 import { connect } from "react-redux";
-
+import moment from "moment";
 class MonthLine extends React.Component {
-  daysIndex = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  handleClickDay = id => {
+    const selectedYear = this.props.year;
+    const selectedMon = this.props.month;
+    const selectedDay = this.getDaysArray(selectedYear, selectedMon)[id].day;
+    const selectedDate = moment(
+      new Date(selectedYear, selectedMon, selectedDay)
+    ).format("MM/DD/YYYY");
+    this.props.setDate(selectedDate);
+    this.props.goToDayPage();
+  };
 
   getDaysInMonth = (year, month) => {
     var monthStart = new Date(year, month, 1);
@@ -15,19 +22,13 @@ class MonthLine extends React.Component {
   };
 
   getDaysArray = (year, month) => {
-    let index,
-      i,
-      l,
-      daysArray,
-      weekNo = 0;
-    index = this.daysIndex[
-      new Date(year, month - 1, 1).toString().split(" ")[0]
-    ];
-    daysArray = [];
+    let weekNo = 0;
+    let index = days[new Date(year, month, 1).toString().split(" ")[0]];
+    let daysArray = [];
     const width = 37;
     const height = 42;
 
-    for (i = 0, l = this.getDaysInMonth(year, month - 1); i < l; i++) {
+    for (let i = 0, l = this.getDaysInMonth(year, month); i < l; i++) {
       daysArray.push({
         day: i + 1,
         weekNo: weekNo,
@@ -48,57 +49,39 @@ class MonthLine extends React.Component {
     return daysArray;
   };
 
-  weeksOfMonth() {
-    let weeksOfMonth = [1, 2];
-    ////////////////////////
-    return weeksOfMonth;
-  }
-
   render() {
-    const height = 42;
-    const stylePositionHrs = id => {
-      return { transform: `translateY(${height * id + 10}px)` };
-    };
+    const { year, month } = this.props;
 
-    const WeekViewLines = this.weeksOfMonth(this.props.month).map(
-      (week, id) => (
-        <div
-          className="hrs position-absolute"
-          key={id}
-          style={stylePositionHrs(id)}
-        >
-          <div className="hr-line"></div>
-          <span className="week-no">{week}</span>
-        </div>
-      )
+    const HeaderView = <label className="month-header">{months[month]}</label>;
+
+    const DaysView = (
+      <div className="days">
+        {this.getDaysArray(year, month).map((dayObj, id) => (
+          <div
+            key={id}
+            className="position-absolute"
+            style={dayObj.position}
+            onClick={() => this.handleClickDay(id)}
+          >
+            {dayObj.day}
+          </div>
+        ))}
+      </div>
     );
 
     return (
-      <div className="">
-        <label className="month-header">{months[this.props.month - 1]}</label>
-        {WeekViewLines}
-        <div className="days">
-          {this.getDaysArray(this.props.year, this.props.month).map(
-            (dayObj, id) => (
-              <div
-                key={id}
-                className="position-absolute"
-                style={dayObj.position}
-                onClick={this.props.onClickDay}
-              >
-                {dayObj.day}
-              </div>
-            )
-          )}
-        </div>
-      </div>
+      <>
+        {HeaderView}
+        {DaysView}
+      </>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickDay: () => dispatch(setPageID(8))
+    setDate: date => dispatch(setDate(date)),
+    goToDayPage: () => dispatch(setPageID(8))
   };
 };
 

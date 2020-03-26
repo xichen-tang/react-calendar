@@ -1,9 +1,8 @@
 import React from "react";
-import "./week-line.css";
+import { ONE_LETTER_WEEKS as weeks } from "../../constant";
 
 export default class WeekLine extends React.Component {
   render() {
-    const weeks = ["M", "T", "C", "T", "F", "L", "S"];
     const width = 37;
     const styleWeekLine = id => {
       return {

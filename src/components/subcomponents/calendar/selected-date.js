@@ -1,5 +1,4 @@
 import React from "react";
-import "./selected-date.css";
 
 export default class SelectedDate extends React.Component {
   render() {

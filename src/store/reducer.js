@@ -2,14 +2,16 @@ import {
   ADD_TIME_SLOTS_STARTED,
   ADD_TIME_SLOTS_SUCCESS,
   ADD_TIME_SLOTS_FAILURE,
-  PAGE_NAVIGATION
+  PAGE_NAVIGATION,
+  SAVE_DATE
 } from "./types";
 
 const initialState = {
   loading: false,
   error: null,
   timeSlots: [],
-  pageID: 0
+  pageID: 0,
+  selectedDate: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +20,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pageID: action.payload
+      };
+    case SAVE_DATE:
+      return {
+        ...state,
+        selectedDate: action.payload
       };
     case ADD_TIME_SLOTS_STARTED:
       return {
