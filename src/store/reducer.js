@@ -3,15 +3,18 @@ import {
   ADD_TIME_SLOTS_SUCCESS,
   ADD_TIME_SLOTS_FAILURE,
   PAGE_NAVIGATION,
-  SAVE_DATE
+  SAVE_DATE,
+  SAVE_DATE_IN_FORMAT
 } from "./types";
+import { initCurDate, initCurDateFormat } from "../components/utils";
 
 const initialState = {
   loading: false,
   error: null,
   timeSlots: [],
   pageID: 0,
-  selectedDate: ""
+  selectedDate: initCurDate(),
+  dateInFormat: initCurDateFormat()
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +28,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedDate: action.payload
+      };
+    case SAVE_DATE_IN_FORMAT:
+      return {
+        ...state,
+        dateInFormat: action.payload
       };
     case ADD_TIME_SLOTS_STARTED:
       return {

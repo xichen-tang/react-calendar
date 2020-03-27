@@ -10,6 +10,7 @@ import {
   HEADERS,
   INPUT_LABELS,
   BUTTON_LABELS,
+  PERSONAL_MODES,
   BUTTON_MODES
 } from "../constant";
 
@@ -18,12 +19,11 @@ class LastInformation extends React.Component {
     mode: "",
     showDurationPicker: false,
     hours: 0,
-    minutes: 0,
-    seconds: 0
+    minutes: 0
   };
 
   componentDidMount() {
-    this.setState({ mode: BUTTON_MODES.private });
+    this.setState({ mode: PERSONAL_MODES[0] });
   }
 
   onModeChange = e => {
@@ -31,8 +31,8 @@ class LastInformation extends React.Component {
   };
 
   onChange = duration => {
-    const { hours, minutes, seconds } = duration;
-    this.setState({ hours, minutes, seconds });
+    const { hours, minutes } = duration;
+    this.setState({ hours, minutes });
   };
 
   closeDuration = () => {
@@ -45,6 +45,10 @@ class LastInformation extends React.Component {
 
   onChangeDuration = () => {
     this.showDuration();
+  };
+
+  isChecked = mode => {
+    return this.state.mode === mode;
   };
 
   render() {
@@ -71,45 +75,23 @@ class LastInformation extends React.Component {
       </div>
     );
 
-    let privateModeClass = "mode-btn ",
-      advancedModeClass = "mode-btn ",
-      checkPrivate,
-      checkAdvanced;
-    if (mode === BUTTON_MODES.private) {
-      privateModeClass += "mode-selected";
-      advancedModeClass.substr(advancedModeClass.lastIndexOf(" "));
-      checkPrivate = true;
-      checkAdvanced = false;
-    } else {
-      advancedModeClass += "mode-selected";
-      privateModeClass.substr(privateModeClass.lastIndexOf(" "));
-      checkAdvanced = true;
-      checkPrivate = false;
-    }
+    const styleMode = m => {
+      return mode === m ? { backgroundColor: "#1c69d4", color: "#ffffff" } : {};
+    };
 
     const ModeButtonsView = (
       <div className="d-flex justify-content-around personal-business p-4">
-        <label className={privateModeClass}>
-          <input
-            id={BUTTON_MODES.private}
-            type="radio"
-            checked={checkPrivate}
-            onChange={this.onModeChange}
-            value={BUTTON_MODES.private}
-          />
-          {BUTTON_LABELS.private}
-        </label>
-
-        <label className={advancedModeClass}>
-          <input
-            id={BUTTON_MODES.advanced}
-            type="radio"
-            checked={checkAdvanced}
-            onChange={this.onModeChange}
-            value={BUTTON_MODES.advanced}
-          />
-          {BUTTON_LABELS.advanced}
-        </label>
+        {PERSONAL_MODES.map((m, i) => (
+          <label className="mode-btn" key={i} style={styleMode(m)}>
+            <input
+              type="radio"
+              checked={this.isChecked(m)}
+              onChange={this.onModeChange}
+              value={m}
+            />
+            {BUTTON_LABELS[m]}
+          </label>
+        ))}
       </div>
     );
 
@@ -124,22 +106,24 @@ class LastInformation extends React.Component {
       <div>
         <DurationPicker
           onChange={this.onChange}
-          initialDuration={{ hours: 0, minutes: 30, seconds: 0 }}
+          initialDuration={{ hours: 0, minutes: 30 }}
           maxHours={3}
         />
-        <button onClick={this.closeDuration}>Close</button>
+        <button className="close-duration" onClick={this.closeDuration}>
+          Close
+        </button>
       </div>
     );
 
     const DurationView = (
-      <div className="duration">
+      <div className="duration text-center">
         {showDurationPicker && DurationPickerView}
         <div className="flow-input" onClick={this.showDuration}>
           <input
             type="none"
             placeholder={INPUT_LABELS.duration}
             onChange={this.onChangeDuration}
-            value={`${this.state.hours}:${this.state.minutes}:${this.state.seconds}`}
+            value={`${this.state.hours}:${this.state.minutes}`}
           />
         </div>
       </div>

@@ -13,9 +13,28 @@ import {
 } from "../constant";
 
 class LicensePlate extends React.Component {
+  state = {
+    option: ""
+  };
+
+  onOptionChange = e => {
+    this.setState({ option: e.target.value });
+  };
+
+  isChecked = option => {
+    return this.state.option === option;
+  };
+
   render() {
+    const { option } = this.state;
     // temporal data
     const options = ["BL 29", "FY 20", "BW 51 10", "BL 28"];
+
+    const styleOption = opt => {
+      return option === opt
+        ? { backgroundColor: "#1c69d4", color: "#ffffff" }
+        : {};
+    };
 
     const LicensePlateView = (
       <div className="options text-center">
@@ -23,9 +42,15 @@ class LicensePlate extends React.Component {
           {SUB_HEADERS.latestLicensePlates}
         </div>
         {options.map((option, id) => (
-          <div key={id} className="option p-3">
+          <label key={id} className="option p-3" style={styleOption(option)}>
+            <input
+              type="radio"
+              checked={this.isChecked(option)}
+              onChange={this.onOptionChange}
+              value={option}
+            />
             {option}
-          </div>
+          </label>
         ))}
       </div>
     );

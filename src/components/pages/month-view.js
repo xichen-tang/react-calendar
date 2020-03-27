@@ -4,7 +4,8 @@ import MonthLine from "../subcomponents/calendar/month-line";
 import WeekLine from "../subcomponents/calendar/week-line";
 import WeekNoLine from "../subcomponents/calendar/week-no-line";
 import InfiniteScroll from "react-infinite-scroller";
-import { HEADERS, CURRENT_DATE_FORMAT as date } from "../constant";
+import { HEADERS } from "../constant";
+import { getCurDate } from "../utils";
 
 export default class MonthView extends React.Component {
   state = {
@@ -13,7 +14,7 @@ export default class MonthView extends React.Component {
   };
 
   componentDidMount() {
-    let months = [date.month];
+    let months = [getCurDate().month];
     this.setState({ months: months });
   }
 
@@ -45,8 +46,8 @@ export default class MonthView extends React.Component {
     this.state.months.map((month, i) =>
       months.push(
         <div className="text-center" key={i}>
-          <WeekNoLine year={date.year} month={month} />
-          <MonthLine year={date.year} month={month} />
+          <WeekNoLine year={getCurDate().year} month={month} />
+          <MonthLine year={getCurDate().year} month={month} />
         </div>
       )
     );
@@ -72,7 +73,7 @@ export default class MonthView extends React.Component {
     );
 
     return (
-      <div className="p-3">
+      <div className="p-3 vh-100">
         <MainHeader title={HEADERS.testDriveDate} />
         {WeekLineView}
         {MonthView}

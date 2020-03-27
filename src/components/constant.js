@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export const HEADERS = {
   testDriveDate: "Hvornår skal kunden prøvekøre?",
   enterDriverCPR: "Skriv førerens CPR-nummer",
@@ -38,16 +36,6 @@ export const DANISH_WEEKS = [
 ];
 
 export const ONE_LETTER_WEEKS = ["M", "T", "C", "T", "F", "L", "S"];
-
-export const DAYS_LIST_IN_WEEK = [1, 2, 3, 4, 5, 6, 7];
-
-export const CURRENT_DATE_FORMAT = {
-  year: moment().year(),
-  month: moment().month(),
-  week: moment().day(),
-  day: moment().date(),
-  weekNo: moment().week()
-};
 
 export const DAYS_INDEX = {
   Mon: 0,
@@ -112,7 +100,9 @@ export const DESCRIPTIONS = {
 
 export const BUTTON_MODES = {
   confirm: "confirm",
-  manual: "manual",
-  private: "private",
-  advanced: "advanced"
+  manual: "manual"
 };
+
+export const PERSONAL_MODES = ["private", "advanced"];
+
+export const DAYS_COUNT_IN_WEEK = 7;

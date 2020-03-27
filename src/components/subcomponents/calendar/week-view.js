@@ -1,24 +1,16 @@
-import React, { createRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { setDate } from "../../../store/actions";
-import { DAYS_LIST_IN_WEEK as days } from "../../constant";
+import { setDateInFormat, setDate } from "../../../store/actions";
+import { dayIDsInWeek, formatDate } from "../../utils";
 import moment from "moment";
 
 class WeekView extends React.Component {
-  daysRef = createRef();
-
-  componentDidMount() {
-    // this.initStyleDay(); // select day automatically
-  }
-
-  initStyleDay() {
-    const id = this.getDaysFromWeek(this.props.week).indexOf(this.props.day);
-    if (!id) return;
-    this.daysRef.current.children[id].classList.add("selected");
-  }
+  state = {
+    selectedDate: ""
+  };
 
   getDaysFromWeek = week => {
-    return days.map(d =>
+    return dayIDsInWeek().map(d =>
       moment()
         .week(week)
         .day(d)
@@ -26,45 +18,67 @@ class WeekView extends React.Component {
     );
   };
 
-  onDayClicked = (id, day) => {
-    const count = this.daysRef.current.getElementsByClassName("selected")
-      .length;
-    if (count > 0) this.clearDayStyle();
-    this.daysRef.current.children[id].classList.add("selected");
-
-    const year = moment(this.props.selectedDate).year();
-    const month = moment(this.props.selectedDate).month();
-    const date = moment(new Date(year, month, day)).format("MM/DD/YYYY");
-    this.props.setDate(date);
+  isDayChecked = day => {
+    return this.props.day === day;
   };
 
-  clearDayStyle = () => {
-    [...this.daysRef.current.children].map(child => {
-      return child.classList.remove("selected");
-    });
+  onDayChange = e => {
+    const day = e.target.value;
+    let selected = moment(this.props.selectedDate);
+    this.updateDate(selected.year(), selected.month(), day);
+    this.updateDateInFormat(
+      selected.year(),
+      selected.month(),
+      selected.day(),
+      day
+    );
   };
+
+  updateDateInFormat(yr, mon, wk, day) {
+    const dateInFormat = formatDate(yr, mon, wk, day);
+    this.props.setDateInFormat(dateInFormat);
+  }
+
+  updateDate(yr, mon, day) {
+    const selectedDate = moment(new Date(yr, mon, day)).format("MM/DD/YYYY");
+    this.props.setDate(selectedDate);
+  }
 
   render() {
     const width = 37;
-    const styleDayPosition = id => {
-      return {
-        transform: `translateX(${id * width}px`
-      };
+    const { day } = this.props;
+    const styleDayPosition = (id, selectedDay) => {
+      return day === selectedDay
+        ? {
+            transform: `translateX(${id * width}px`,
+            borderRadius: "50%",
+            color: "#ffffff",
+            backgroundColor: "#0653b6",
+            fontWeight: "bold"
+          }
+        : {
+            transform: `translateX(${id * width}px`
+          };
     };
 
     return (
       <div className="week-view">
         <span className="week-no">{this.props.week}</span>
-        <div ref={this.daysRef} className="week-days text-center">
+        <div className="week-days d-flex">
           {this.getDaysFromWeek(this.props.week).map((day, id) => (
-            <div
+            <label
               key={id}
               className="position-absolute day"
-              onClick={() => this.onDayClicked(id, day)}
-              style={styleDayPosition(id)}
+              style={styleDayPosition(id, day)}
             >
+              <input
+                type="radio"
+                checked={this.isDayChecked(day)}
+                onChange={this.onDayChange}
+                value={day}
+              />
               {day}
-            </div>
+            </label>
           ))}
         </div>
       </div>
@@ -80,6 +94,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setDateInFormat: date => dispatch(setDateInFormat(date)),
     setDate: date => dispatch(setDate(date))
   };
 };

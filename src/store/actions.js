@@ -3,7 +3,8 @@ import {
   ADD_TIME_SLOTS_FAILURE,
   ADD_TIME_SLOTS_STARTED,
   PAGE_NAVIGATION,
-  SAVE_DATE
+  SAVE_DATE,
+  SAVE_DATE_IN_FORMAT
 } from "./types";
 import axios from "axios";
 
@@ -29,6 +30,11 @@ export const setPageID = id => ({
 
 export const setDate = date => ({
   type: SAVE_DATE,
+  payload: date
+});
+
+export const setDateInFormat = date => ({
+  type: SAVE_DATE_IN_FORMAT,
   payload: date
 });
 
