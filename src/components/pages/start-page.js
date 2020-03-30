@@ -1,7 +1,7 @@
 import React from "react";
-import { BUTTON_LABELS } from "../constant";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
+import { PAGE_INDEX, BUTTON_LABELS } from "../constant";
 
 class StartPage extends React.Component {
   render() {
@@ -37,8 +37,9 @@ class StartPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickAddAppointment: () => dispatch(setPageID(8)),
-    onStartCalendar: () => dispatch(dispatch(setPageID(2)))
+    onClickAddAppointment: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2)),
+    onStartCalendar: () =>
+      dispatch(dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)))
   };
 };
 

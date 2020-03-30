@@ -6,30 +6,61 @@ import BackMonth from "../subcomponents/button/back-month";
 import WeekView from "../subcomponents/calendar/week-view";
 import SelectedDate from "../subcomponents/calendar/selected-date";
 import TimeSlots from "../subcomponents/calendar/time-slots";
-import { HEADERS, DANISH_MONTHS as months } from "../constant";
+import Appointments from "../subcomponents/calendar/appointments";
+import {
+  PAGE_INDEX,
+  HEADERS,
+  DANISH_MONTHS as months,
+  FLOW_MODES as modes
+} from "../constant";
 import { connect } from "react-redux";
-import { getAvailableTimeSlots, setPageID } from "../../store/actions";
+import {
+  getAvailableAppointments,
+  getAvailableTimeSlots,
+  setPageID
+} from "../../store/actions";
 
 class DayView extends React.Component {
   componentDidMount() {
     this.props.getAvailableTimeSlots();
+    this.props.getAvailableAppointments();
   }
 
   render() {
-    const { onBackMonth, timeSlots, dateInFormat, selectedDate } = this.props;
+    const {
+      onBackMonth,
+      timeSlots,
+      dateInFormat,
+      selectedDate,
+      appointments,
+      mode
+    } = this.props;
 
     const month = moment(new Date(selectedDate)).month();
     const day = moment(new Date(selectedDate)).date();
     const weekNo = moment(new Date(selectedDate)).week();
 
-    return (
-      <div className="p-4 text-center vh-100">
+    const TopView = (
+      <>
         <MainHeader title={HEADERS.testDriveDate} />
         <BackMonth onClick={onBackMonth} month={months[month]} />
         <WeekLine />
         <WeekView week={weekNo} day={day} />
         <SelectedDate date={dateInFormat} />
+      </>
+    );
+
+    const MiddleView =
+      mode === modes.flow2 ? (
         <TimeSlots timeSlots={timeSlots} />
+      ) : (
+        <Appointments appointments={appointments} />
+      );
+
+    return (
+      <div className="p-4 text-center vh-100">
+        {TopView}
+        {MiddleView}
       </div>
     );
   }
@@ -38,6 +69,7 @@ class DayView extends React.Component {
 const mapStateToProps = state => {
   return {
     timeSlots: state.timeSlots,
+    appointments: state.appointments,
     selectedDate: state.selectedDate,
     dateInFormat: state.dateInFormat
   };
@@ -45,7 +77,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onBackMonth: () => dispatch(setPageID(7)),
+    onBackMonth: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_2_2)),
+    getAvailableAppointments: () => dispatch(getAvailableAppointments()),
     getAvailableTimeSlots: () => dispatch(getAvailableTimeSlots())
   };
 };

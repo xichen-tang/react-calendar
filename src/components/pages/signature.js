@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
-import { HEADERS, BUTTON_LABELS } from "../constant";
+import { PAGE_INDEX, HEADERS, BUTTON_LABELS } from "../constant";
 import SignatureCanvas from "react-signature-canvas";
 
 class Signature extends React.Component {
@@ -58,7 +58,7 @@ class Signature extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickContinue: () => dispatch(setPageID(16))
+    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.DONE))
   };
 };
 

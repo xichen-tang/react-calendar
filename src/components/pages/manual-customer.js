@@ -5,6 +5,7 @@ import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
+  PAGE_INDEX,
   BUTTON_LABELS,
   HEADERS,
   INPUT_LABELS,
@@ -47,7 +48,7 @@ class ManualCustomer extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickContinue: () => dispatch(setPageID(11))
+    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE))
   };
 };
 

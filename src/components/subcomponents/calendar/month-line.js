@@ -1,8 +1,13 @@
 import React from "react";
-import { DANISH_MONTHS as months, DAYS_INDEX as days } from "../../constant";
 import { setDate, setPageID } from "../../../store/actions";
 import { connect } from "react-redux";
 import moment from "moment";
+import {
+  PAGE_INDEX,
+  DANISH_MONTHS as months,
+  DAYS_INDEX as days
+} from "../../constant";
+
 class MonthLine extends React.Component {
   handleClickDay = id => {
     const selectedYear = this.props.year;
@@ -81,7 +86,7 @@ class MonthLine extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     setDate: date => dispatch(setDate(date)),
-    goToDayPage: () => dispatch(setPageID(8))
+    goToDayPage: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2))
   };
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { setPageID } from "../../../store/actions";
-
+import { PAGE_INDEX } from "../../constant";
 class TimeSlots extends React.Component {
   timeSlots() {
     if (!this.props.timeSlots) return [];
@@ -25,13 +25,13 @@ class TimeSlots extends React.Component {
         {slot.start} - {slot.end}
       </div>
     ));
-    return <div className="px-4 slots">{renderTimeSlot}</div>;
+    return <div className="px-4 time-slots">{renderTimeSlot}</div>;
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickTimeSlot: () => dispatch(setPageID(9))
+    onClickTimeSlot: () => dispatch(setPageID(PAGE_INDEX.SEARCH_CUSTOMER))
   };
 };
 

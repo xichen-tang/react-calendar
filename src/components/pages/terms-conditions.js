@@ -8,7 +8,8 @@ import {
   BUTTON_LABELS,
   HEADERS,
   SUB_HEADERS,
-  DESCRIPTIONS
+  DESCRIPTIONS,
+  PAGE_INDEX
 } from "../constant";
 
 class TermsConditions extends React.Component {
@@ -51,8 +52,8 @@ class TermsConditions extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickYes: () => dispatch(setPageID(15)),
-    onClickNo: () => dispatch(setPageID(15))
+    onClickYes: () => dispatch(setPageID(PAGE_INDEX.SIGNATURE)),
+    onClickNo: () => dispatch(setPageID(PAGE_INDEX.START_PAGE))
   };
 };
 

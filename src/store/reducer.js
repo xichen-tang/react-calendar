@@ -1,4 +1,7 @@
 import {
+  ADD_APPOINTMENT_STARTED,
+  ADD_APPOINTMENT_SUCCESS,
+  ADD_APPOINTMENT_FAILURE,
   ADD_TIME_SLOTS_STARTED,
   ADD_TIME_SLOTS_SUCCESS,
   ADD_TIME_SLOTS_FAILURE,
@@ -11,6 +14,7 @@ import { initCurDate, initCurDateFormat } from "../components/utils";
 const initialState = {
   loading: false,
   error: null,
+  appointments: [],
   timeSlots: [],
   pageID: 0,
   selectedDate: initCurDate(),
@@ -48,6 +52,24 @@ const reducer = (state = initialState, action) => {
       };
 
     case ADD_TIME_SLOTS_FAILURE:
+      return {
+        ...state,
+        error: action.payload.err
+      };
+    case ADD_APPOINTMENT_STARTED:
+      return {
+        ...state,
+        loading: true
+      };
+    case ADD_APPOINTMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        appointments: action.payload
+      };
+
+    case ADD_APPOINTMENT_FAILURE:
       return {
         ...state,
         error: action.payload.err

@@ -5,6 +5,7 @@ import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
+  PAGE_INDEX,
   HEADERS,
   SUB_HEADERS,
   BUTTON_LABELS,
@@ -78,7 +79,7 @@ class LicensePlate extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickContinue: () => dispatch(setPageID(12))
+    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.LAST_INFORMATIONS))
   };
 };
 

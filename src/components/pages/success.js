@@ -4,6 +4,7 @@ import GeneralButton from "../subcomponents/button/general-btn";
 import { setPageID } from "../../store/actions";
 import { connect } from "react-redux";
 import {
+  PAGE_INDEX,
   DESCRIPTIONS,
   BUTTON_LABELS,
   HEADERS,
@@ -40,7 +41,7 @@ class Success extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickDone: () => dispatch(setPageID(0))
+    onClickDone: () => dispatch(setPageID(PAGE_INDEX.START_PAGE))
   };
 };
 

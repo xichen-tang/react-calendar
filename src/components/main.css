@@ -50,7 +50,7 @@
 }
 
 .option input {
-  display: none
+  display: none;
 }
 
 .options-header {
@@ -216,18 +216,18 @@
   font-family: "BMWTypeNextBold";
 }
 
-.slot {
+.time-slots .slot {
   height: 50px;
   padding-top: 15px;
   cursor: pointer;
   border-top: 1px solid #e6e6e6;
 }
 
-.slot:last-child {
+.time-slots .slot:last-child {
   border-bottom: 1px solid #e6e6e6;
 }
 
-.slots {
+.time-slots {
   height: 55%;
   overflow-y: scroll;
 }
@@ -244,7 +244,7 @@
   padding-top: 12px;
 }
 
-.hr-line {
+.hrs .hr-line {
   height: 1px;
   border-top: 1px solid #e6e6e6;
 }
@@ -337,4 +337,53 @@
   color: black;
   border: 1px solid black;
   margin: auto;
+}
+
+.appointments {
+  height: calc(100% - 275px);
+}
+
+.appointment {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.appointment .slots {
+  list-style: none;
+}
+
+.appointment .hr-line {
+  border-top: 1px solid #e6e6e6;
+}
+
+.appointment .hr-line span {
+  position: absolute;
+  left: -2rem;
+  transform: translate(-50%, -50%);
+}
+
+.appointment .views {
+  width: 66%;
+  margin: auto;
+  list-style: none;
+  position: relative;
+  padding: 1rem 0 0 0;
+}
+
+.appointment .event-view {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  background: #666666;
+  color: white;
+}
+
+.appointment .event-view span {
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  left: 50%;
 }

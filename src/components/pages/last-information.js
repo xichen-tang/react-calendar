@@ -7,6 +7,7 @@ import FlowInput from "../subcomponents/input/flow-input";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
+  PAGE_INDEX,
   HEADERS,
   INPUT_LABELS,
   BUTTON_LABELS,
@@ -164,8 +165,8 @@ class LastInformation extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickContinue: () => dispatch(setPageID(13)),
-    onClickSaveAndClose: () => dispatch(setPageID(0))
+    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.PICTURE)),
+    onClickSaveAndClose: () => dispatch(setPageID(PAGE_INDEX.START_PAGE))
   };
 };
 

@@ -1,4 +1,25 @@
+export const PAGE_INDEX = {
+  START_PAGE: 0,
+  MONTH_VIEW_1_2: 1,
+  MONTH_VIEW_2_2: 2,
+  DAY_VIEW_1_2: 3,
+  DAY_VIEW_2_2: 4,
+  SEARCH_CUSTOMER: 5,
+  ENTER_CUSTOMER_MANUALLY: 6,
+  CHOOSE_LICENSE_PLATE: 7,
+  LAST_INFORMATIONS: 8,
+  PICTURE: 9,
+  TERMS_AND_CONDITIONS: 10,
+  SIGNATURE: 11,
+  NEW_APPOINTMENT: 12,
+  APPOINTMENT_1: 13,
+  APPOINTMENT_2_1: 14,
+  APPOINTMENT_2_2: 15,
+  DONE: 16
+};
+
 export const HEADERS = {
+  calendar: "Kalender",
   testDriveDate: "Hvornår skal kunden prøvekøre?",
   enterDriverCPR: "Skriv førerens CPR-nummer",
   manualDriverInfo: "Skriv førerens oplysninger manuelt",
@@ -8,6 +29,11 @@ export const HEADERS = {
   flipPhoneToSign: "Vend telefonen om for at underskrive køresedlen",
   termsAndConditions: "Det her er vigtigt! Betingelser og samtykke",
   done: "Færdig!"
+};
+
+export const FLOW_MODES = {
+  flow1: "Add-Appointment-Flow",
+  flow2: "Start-Calendar-Flow"
 };
 
 export const DANISH_MONTHS = [
@@ -35,7 +61,7 @@ export const DANISH_WEEKS = [
   "Søndag"
 ];
 
-export const ONE_LETTER_WEEKS = ["M", "T", "C", "T", "F", "L", "S"];
+export const ONE_LETTER_WEEKS = ["M", "T", "O", "T", "F", "L", "S"];
 
 export const DAYS_INDEX = {
   Mon: 0,
@@ -106,3 +132,12 @@ export const BUTTON_MODES = {
 export const PERSONAL_MODES = ["private", "advanced"];
 
 export const DAYS_COUNT_IN_WEEK = 7;
+
+export const DAY_LENGTH = 24;
+
+export const SLOT_CONFIG = {
+  nextSlot: 30,
+  startTime: "00:00",
+  endTime: "23:59",
+  heightPerThirtyMins: 36
+};

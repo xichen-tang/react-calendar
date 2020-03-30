@@ -5,6 +5,7 @@ import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
+  PAGE_INDEX,
   DESCRIPTIONS,
   BUTTON_LABELS,
   BUTTON_MODES,
@@ -68,7 +69,8 @@ class Picture extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickTakePicture: () => dispatch(setPageID(14))
+    onClickTakePicture: () =>
+      dispatch(setPageID(PAGE_INDEX.TERMS_AND_CONDITIONS))
   };
 };
 

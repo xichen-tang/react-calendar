@@ -1,8 +1,32 @@
 [{
     "event": {
         "subject": "Bil udlånt til Nordania-blidag",
-        "start": "Some Date()",
-        "end": "Some Date()",
+        "start": "10:35",
+        "end": "11:40",
+        "internal": false,
+        "car": {
+            "manufacturer": "BMW",
+            "model": "320i",
+            "variant": "Sedan",
+            "equipment": "Connected",
+            "licensePlate": "BL 24",
+            "isRegistered": false
+        },
+        "user": {
+            "firstName": "Mikkel",
+            "lastName": "Bredal"
+        },
+        "customer": {
+            "firstName": "Navn",
+            "lastName": "Navnesen",
+            "phone": "+4512345678"
+        }
+    }
+}, {
+    "event": {
+        "subject": "Bil udlånt til Nordania-blidag",
+        "start": "01:22",
+        "end": "02:22",
         "internal": false,
         "car": {
             "manufacturer": "BMW",

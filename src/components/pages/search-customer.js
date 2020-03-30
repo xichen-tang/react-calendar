@@ -5,6 +5,7 @@ import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
+  PAGE_INDEX,
   HEADERS,
   INPUT_LABELS,
   BUTTON_LABELS,
@@ -48,8 +49,10 @@ class SearchCustomer extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickSearchCustomer: () => dispatch(setPageID(11)),
-    onClickManualMode: () => dispatch(setPageID(10))
+    onClickSearchCustomer: () =>
+      dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE)),
+    onClickManualMode: () =>
+      dispatch(setPageID(PAGE_INDEX.ENTER_CUSTOMER_MANUALLY))
   };
 };
 
