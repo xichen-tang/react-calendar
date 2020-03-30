@@ -11,6 +11,8 @@ import TermsConditions from "./pages/terms-conditions";
 import Signature from "./pages/signature";
 import Success from "./pages/success";
 import LastInformation from "./pages/last-information";
+import NewAppointment from "./pages/new-appointment";
+import AppointmentView from "./pages/view-appointment";
 import { connect } from "react-redux";
 import { FLOW_MODES } from "./constant";
 import "./main.css";
@@ -20,8 +22,8 @@ class Calendar extends React.Component {
     const { pageID } = this.props;
     const pages = [
       <StartPage />,
-      <MonthView mode={FLOW_MODES.flow1} />,
-      <MonthView mode={FLOW_MODES.flow2} />,
+      <MonthView />,
+      <MonthView />,
       <DayView mode={FLOW_MODES.flow1} />,
       <DayView mode={FLOW_MODES.flow2} />,
       <SearchCustomer />,
@@ -31,10 +33,10 @@ class Calendar extends React.Component {
       <Picture />,
       <TermsConditions />,
       <Signature />,
-      // <NewAppointment/>,
-      // <Appointment mode={1}/>,
-      // <Appointment mode={2}/>,
-      // <Appointment mode={3}/>,
+      <NewAppointment />,
+      <AppointmentView mode={1} />,
+      <AppointmentView mode={2} />,
+      <AppointmentView mode={3} />,
       <Success />
     ];
     return (

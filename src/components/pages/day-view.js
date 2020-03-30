@@ -17,32 +17,52 @@ import { connect } from "react-redux";
 import {
   getAvailableAppointments,
   getAvailableTimeSlots,
-  setPageID
+  setPageID,
+  setFlowMode
 } from "../../store/actions";
 
 class DayView extends React.Component {
   componentDidMount() {
-    this.props.getAvailableTimeSlots();
-    this.props.getAvailableAppointments();
+    const {
+      getAvailableTimeSlots,
+      getAvailableAppointments,
+      setFlowMode1,
+      setFlowMode2
+    } = this.props;
+    getAvailableTimeSlots();
+    getAvailableAppointments();
+    this.checkFlowisOne() ? setFlowMode1() : setFlowMode2();
+  }
+
+  checkFlowisOne() {
+    const { mode } = this.props;
+    return mode === modes.flow1;
   }
 
   render() {
     const {
-      onBackMonth,
+      onBackMonth1,
+      onBackMonth2,
       timeSlots,
       dateInFormat,
       selectedDate,
-      appointments,
-      mode
+      appointments
     } = this.props;
 
     const month = moment(new Date(selectedDate)).month();
     const day = moment(new Date(selectedDate)).date();
     const weekNo = moment(new Date(selectedDate)).week();
+    const headerByFlow = this.checkFlowisOne()
+      ? HEADERS.calendar
+      : HEADERS.testDriveDate;
 
-    const TopView = (
+    const HeaderView = <MainHeader title={headerByFlow} />;
+
+    const onBackMonth = () =>
+      this.checkFlowisOne() ? onBackMonth1() : onBackMonth2();
+
+    const MainView = (
       <>
-        <MainHeader title={HEADERS.testDriveDate} />
         <BackMonth onClick={onBackMonth} month={months[month]} />
         <WeekLine />
         <WeekView week={weekNo} day={day} />
@@ -50,17 +70,17 @@ class DayView extends React.Component {
       </>
     );
 
-    const MiddleView =
-      mode === modes.flow2 ? (
-        <TimeSlots timeSlots={timeSlots} />
-      ) : (
-        <Appointments appointments={appointments} />
-      );
+    const SlotsView = this.checkFlowisOne() ? (
+      <Appointments appointments={appointments} />
+    ) : (
+      <TimeSlots timeSlots={timeSlots} />
+    );
 
     return (
       <div className="p-4 text-center vh-100">
-        {TopView}
-        {MiddleView}
+        {HeaderView}
+        {MainView}
+        {SlotsView}
       </div>
     );
   }
@@ -77,7 +97,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onBackMonth: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_2_2)),
+    setFlowMode1: () => dispatch(setFlowMode(modes.flow1)),
+    setFlowMode2: () => dispatch(setFlowMode(modes.flow2)),
+    onBackMonth1: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_1_2)),
+    onBackMonth2: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_2_2)),
     getAvailableAppointments: () => dispatch(getAvailableAppointments()),
     getAvailableTimeSlots: () => dispatch(getAvailableTimeSlots())
   };

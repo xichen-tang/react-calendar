@@ -4,10 +4,11 @@ import MonthLine from "../subcomponents/calendar/month-line";
 import WeekLine from "../subcomponents/calendar/week-line";
 import WeekNoLine from "../subcomponents/calendar/week-no-line";
 import InfiniteScroll from "react-infinite-scroller";
-import { HEADERS } from "../constant";
+import { connect } from "react-redux";
+import { HEADERS, FLOW_MODES as modes } from "../constant";
 import { getCurDate } from "../utils";
 
-export default class MonthView extends React.Component {
+class MonthView extends React.Component {
   state = {
     hasMore: true,
     months: []
@@ -18,13 +19,19 @@ export default class MonthView extends React.Component {
     this.setState({ months: months });
   }
 
+  checkFlowisOne() {
+    const { mode } = this.props;
+    return mode === modes.flow1;
+  }
+
   loadMonths = () => {
     let { months, hasMore } = this.state;
     let lastMonth = months[months.length - 1];
     let nextMonth,
       isMore = hasMore;
 
-    if (lastMonth === 11) {
+    const endMonthOfYear = 11;
+    if (lastMonth === endMonthOfYear) {
       isMore = false;
     } else {
       nextMonth = lastMonth + 1;
@@ -34,6 +41,12 @@ export default class MonthView extends React.Component {
   };
 
   render() {
+    const headerByFlow = this.checkFlowisOne()
+      ? HEADERS.calendar
+      : HEADERS.testDriveDate;
+
+    const HeaderView = <MainHeader title={headerByFlow} />;
+
     const loader = (
       <div className="loader" key={0}>
         Loading...
@@ -74,10 +87,18 @@ export default class MonthView extends React.Component {
 
     return (
       <div className="p-3 vh-100">
-        <MainHeader title={HEADERS.testDriveDate} />
+        {HeaderView}
         {WeekLineView}
         {MonthView}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    mode: state.mode
+  };
+};
+
+export default connect(mapStateToProps, null)(MonthView);

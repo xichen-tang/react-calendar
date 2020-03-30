@@ -32,8 +32,9 @@ export const HEADERS = {
 };
 
 export const FLOW_MODES = {
-  flow1: "Add-Appointment-Flow",
-  flow2: "Start-Calendar-Flow"
+  initial: "Initial-Mode",
+  flow2: "Add-Appointment-Flow",
+  flow1: "Start-Calendar-Flow"
 };
 
 export const DANISH_MONTHS = [
@@ -140,4 +141,9 @@ export const SLOT_CONFIG = {
   startTime: "00:00",
   endTime: "23:59",
   heightPerThirtyMins: 36
+};
+
+export const COLOR_SCHEMA = {
+  blueBackground: "#1c69d4",
+  greyBackground: "#666666"
 };

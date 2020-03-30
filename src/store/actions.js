@@ -7,7 +7,8 @@ import {
   ADD_TIME_SLOTS_STARTED,
   PAGE_NAVIGATION,
   SAVE_DATE,
-  SAVE_DATE_IN_FORMAT
+  SAVE_DATE_IN_FORMAT,
+  SET_FLOW_MODE
 } from "./types";
 import axios from "axios";
 
@@ -41,6 +42,11 @@ export const getAvailableTimeSlots = () => {
       });
   };
 };
+
+export const setFlowMode = mode => ({
+  type: SET_FLOW_MODE,
+  payload: mode
+});
 
 export const setPageID = id => ({
   type: PAGE_NAVIGATION,

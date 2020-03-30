@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { SLOT_CONFIG } from "../../constant";
+import { setPageID } from "../../../store/actions";
+import { SLOT_CONFIG, COLOR_SCHEMA, PAGE_INDEX } from "../../constant";
 
 class Appointments extends React.Component {
   appointments() {
@@ -11,10 +12,13 @@ class Appointments extends React.Component {
       return {
         start: appointments[key].event.start,
         end: appointments[key].event.end,
-        subject: appointments[key].event.subject
+        subject: appointments[key].event.subject,
+        internal: appointments[key].event.internal,
+        car: appointments[key].event.car
       };
     });
   }
+
   // From no idea what the api response supposed to be,
   // let's assume you get response start / end time as like "12:00" / "12:30"
 
@@ -39,6 +43,16 @@ class Appointments extends React.Component {
     return parseInt(arr[0] * minsPerHour) + parseInt(arr[1]);
   }
 
+  onClickAppointment = (event, e) => {
+    event.stopPropagation();
+    if (e.car.isRegistered === true) this.props.gotoAppointmentView1();
+    else this.props.gotoAppointmentView2();
+  };
+
+  onClickOutside = e => {
+    this.props.gotoNewAppointment();
+  };
+
   render() {
     const slots = () => {
       let slots = [];
@@ -55,15 +69,16 @@ class Appointments extends React.Component {
     const styleEvent = event => {
       let heightOfEventItem = this.getHeightFrom(event);
       let startPosOfEventItem = this.getStartPosFrom(event);
+      const backgroundColorOfEvent =
+        event.internal === true
+          ? COLOR_SCHEMA.blueBackground
+          : COLOR_SCHEMA.greyBackground;
       const paddingTop = 16;
       return {
         transform: `translateY(${startPosOfEventItem + paddingTop}px)`,
-        height: `${heightOfEventItem}px`
+        height: `${heightOfEventItem}px`,
+        backgroundColor: `${backgroundColorOfEvent}`
       };
-    };
-
-    const styleSlots = {
-      lineHeight: `${SLOT_CONFIG.heightPerThirtyMins}px`
     };
 
     const styleHrLines = {
@@ -72,14 +87,14 @@ class Appointments extends React.Component {
 
     const AppointmentsView = (
       <div className="appointment">
-        {/* <ul className="slots col-3" style={styleSlots}>
-          {slots().map((slot, i) => (
-            <li key={i}>{slot}</li>
-          ))}
-        </ul> */}
-        <ul className="views">
+        <ul className="views" onClick={e => this.onClickOutside(e)}>
           {this.appointments().map((event, i) => (
-            <div key={i} className="event-view" style={styleEvent(event)}>
+            <div
+              key={i}
+              className="event-view"
+              style={styleEvent(event)}
+              onClick={e => this.onClickAppointment(e, event)}
+            >
               <span>{event.subject}</span>
             </div>
           ))}
@@ -91,6 +106,7 @@ class Appointments extends React.Component {
         </ul>
       </div>
     );
+
     return <div className="appointments">{AppointmentsView}</div>;
   }
 }
@@ -102,7 +118,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    gotoNewAppointment: () => dispatch(setPageID(PAGE_INDEX.NEW_APPOINTMENT)),
+    gotoAppointmentView1: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_1)),
+    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2_1))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Appointments);

@@ -7,11 +7,14 @@ import {
   ADD_TIME_SLOTS_FAILURE,
   PAGE_NAVIGATION,
   SAVE_DATE,
-  SAVE_DATE_IN_FORMAT
+  SAVE_DATE_IN_FORMAT,
+  SET_FLOW_MODE
 } from "./types";
+import { FLOW_MODES } from "../components/constant";
 import { initCurDate, initCurDateFormat } from "../components/utils";
 
 const initialState = {
+  mode: FLOW_MODES.initial,
   loading: false,
   error: null,
   appointments: [],
@@ -23,6 +26,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_FLOW_MODE:
+      return {
+        ...state,
+        mode: action.payload
+      };
     case PAGE_NAVIGATION:
       return {
         ...state,

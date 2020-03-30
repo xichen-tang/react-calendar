@@ -5,7 +5,9 @@ import moment from "moment";
 import {
   PAGE_INDEX,
   DANISH_MONTHS as months,
-  DAYS_INDEX as days
+  DAYS_INDEX as days,
+  DAYS_COUNT_IN_WEEK,
+  FLOW_MODES as modes
 } from "../../constant";
 
 class MonthLine extends React.Component {
@@ -16,9 +18,16 @@ class MonthLine extends React.Component {
     const selectedDate = moment(
       new Date(selectedYear, selectedMon, selectedDay)
     ).format("MM/DD/YYYY");
-    this.props.setDate(selectedDate);
-    this.props.goToDayPage();
+    const { setDate, goToDayPageFlow1, goToDayPageFlow2 } = this.props;
+    setDate(selectedDate);
+    if (this.checkFlowisOne()) goToDayPageFlow1();
+    else goToDayPageFlow2();
   };
+
+  checkFlowisOne() {
+    const { mode } = this.props;
+    return mode === modes.flow1;
+  }
 
   getDaysInMonth = (year, month) => {
     var monthStart = new Date(year, month, 1);
@@ -45,7 +54,7 @@ class MonthLine extends React.Component {
         }
       });
 
-      if (index === 7) {
+      if (index === DAYS_COUNT_IN_WEEK) {
         index = 0;
         weekNo++;
       }
@@ -83,11 +92,18 @@ class MonthLine extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    setDate: date => dispatch(setDate(date)),
-    goToDayPage: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2))
+    mode: state.mode
   };
 };
 
-export default connect(null, mapDispatchToProps)(MonthLine);
+const mapDispatchToProps = dispatch => {
+  return {
+    setDate: date => dispatch(setDate(date)),
+    goToDayPageFlow1: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)),
+    goToDayPageFlow2: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MonthLine);

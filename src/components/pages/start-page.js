@@ -38,8 +38,7 @@ class StartPage extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     onClickAddAppointment: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2)),
-    onStartCalendar: () =>
-      dispatch(dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)))
+    onStartCalendar: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2))
   };
 };
 
