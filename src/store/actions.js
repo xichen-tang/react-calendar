@@ -8,7 +8,8 @@ import {
   PAGE_NAVIGATION,
   SAVE_DATE,
   SAVE_DATE_IN_FORMAT,
-  SET_FLOW_MODE
+  SET_FLOW_MODE,
+  SET_TIME_SLOT
 } from "./types";
 import axios from "axios";
 
@@ -61,6 +62,11 @@ export const setDate = date => ({
 export const setDateInFormat = date => ({
   type: SAVE_DATE_IN_FORMAT,
   payload: date
+});
+
+export const setTimeSlot = time => ({
+  type: SET_TIME_SLOT,
+  payload: time
 });
 
 export const addAppointmentStarted = () => ({

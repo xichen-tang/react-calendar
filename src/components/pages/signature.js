@@ -47,7 +47,7 @@ class Signature extends React.Component {
     );
 
     return (
-      <div className="p-3 position-relative">
+      <div className="p-4 position-relative">
         {HeaderView}
         {SignatureView}
         {ClearSignature}

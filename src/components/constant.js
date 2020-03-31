@@ -76,7 +76,8 @@ export const DAYS_INDEX = {
 
 export const SUB_HEADERS = {
   latestLicensePlates: "Seneste anvendte prøveplader",
-  termsAndConditions: "Vilkår og betingelser"
+  termsAndConditions: "Vilkår og betingelser",
+  appointmentSubject: "Emne"
 };
 export const INPUT_LABELS = {
   ssn: "CPR-nummer",
@@ -108,7 +109,9 @@ export const BUTTON_LABELS = {
   close: "Luk",
   yes: "Ja",
   no: "Nej",
-  saveAndClose: "Gem og luk"
+  saveAndClose: "Gem og luk",
+  save: "Gem",
+  cancel: "Annuller"
 };
 
 export const DESCRIPTIONS = {
@@ -135,6 +138,8 @@ export const PERSONAL_MODES = ["private", "advanced"];
 export const DAYS_COUNT_IN_WEEK = 7;
 
 export const DAY_LENGTH = 24;
+
+export const MINS_PER_HOUR = 60;
 
 export const SLOT_CONFIG = {
   nextSlot: 30,

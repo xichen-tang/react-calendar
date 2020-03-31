@@ -2,7 +2,6 @@ import React from "react";
 import moment from "moment";
 import WeekLine from "../subcomponents/calendar/week-line";
 import MainHeader from "../subcomponents/header/main-header";
-import BackMonth from "../subcomponents/button/back-month";
 import WeekView from "../subcomponents/calendar/week-view";
 import SelectedDate from "../subcomponents/calendar/selected-date";
 import TimeSlots from "../subcomponents/calendar/time-slots";
@@ -20,6 +19,7 @@ import {
   setPageID,
   setFlowMode
 } from "../../store/actions";
+import BackCalendar from "../subcomponents/button/back-calendar";
 
 class DayView extends React.Component {
   componentDidMount() {
@@ -63,7 +63,7 @@ class DayView extends React.Component {
 
     const MainView = (
       <>
-        <BackMonth onClick={onBackMonth} month={months[month]} />
+        <BackCalendar onClick={onBackMonth} label={months[month]} />
         <WeekLine />
         <WeekView week={weekNo} day={day} />
         <SelectedDate date={dateInFormat} />

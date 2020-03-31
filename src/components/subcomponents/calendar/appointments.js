@@ -1,10 +1,17 @@
-import React from "react";
+import React, { createRef } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { setPageID } from "../../../store/actions";
-import { SLOT_CONFIG, COLOR_SCHEMA, PAGE_INDEX } from "../../constant";
+import { setPageID, setTimeSlot } from "../../../store/actions";
+import {
+  SLOT_CONFIG,
+  COLOR_SCHEMA,
+  PAGE_INDEX,
+  MINS_PER_HOUR
+} from "../../constant";
 
 class Appointments extends React.Component {
+  appointmentsRef = createRef();
+
   appointments() {
     const { appointments } = this.props;
     if (!appointments) return [];
@@ -39,8 +46,7 @@ class Appointments extends React.Component {
   }
 
   convertToMins(arr) {
-    const minsPerHour = 60;
-    return parseInt(arr[0] * minsPerHour) + parseInt(arr[1]);
+    return parseInt(arr[0] * MINS_PER_HOUR) + parseInt(arr[1]);
   }
 
   onClickAppointment = (event, e) => {
@@ -50,8 +56,32 @@ class Appointments extends React.Component {
   };
 
   onClickOutside = e => {
+    const paddingOffset = 16;
+    const offsetTop = this.appointmentsRef.current.offsetTop;
+    const scrollTop = this.appointmentsRef.current.firstElementChild.scrollTop;
+    const timeSlot = this.calculateTimeFromPos(
+      e.pageY - offsetTop - paddingOffset + scrollTop
+    );
+    this.props.setTimeSlot(timeSlot);
     this.props.gotoNewAppointment();
   };
+
+  calculateTimeFromPos(offsetY) {
+    const step = Math.floor(offsetY / SLOT_CONFIG.heightPerThirtyMins);
+    const timeObj = {
+      startTime: `${
+        Math.floor(step / 2) > 9
+          ? Math.floor(step / 2)
+          : "0" + Math.floor(step / 2)
+      }:${step % 2 > 0 ? "30" : "00"}`,
+      endTime: `${
+        Math.ceil(step / 2) > 9
+          ? Math.ceil(step / 2)
+          : "0" + Math.ceil(step / 2)
+      }:${step % 2 > 0 ? "00" : "30"}`
+    };
+    return timeObj;
+  }
 
   render() {
     const slots = () => {
@@ -107,7 +137,11 @@ class Appointments extends React.Component {
       </div>
     );
 
-    return <div className="appointments">{AppointmentsView}</div>;
+    return (
+      <div className="appointments" ref={this.appointmentsRef}>
+        {AppointmentsView}
+      </div>
+    );
   }
 }
 
@@ -121,7 +155,8 @@ const mapDispatchToProps = dispatch => {
   return {
     gotoNewAppointment: () => dispatch(setPageID(PAGE_INDEX.NEW_APPOINTMENT)),
     gotoAppointmentView1: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_1)),
-    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2_1))
+    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2_1)),
+    setTimeSlot: timeObj => dispatch(setTimeSlot(timeObj))
   };
 };
 

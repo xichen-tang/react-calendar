@@ -86,7 +86,7 @@ class MonthView extends React.Component {
     );
 
     return (
-      <div className="p-3 vh-100">
+      <div className="p-4 vh-100">
         {HeaderView}
         {WeekLineView}
         {MonthView}

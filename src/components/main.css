@@ -150,7 +150,7 @@
   margin-top: 250px;
 }
 
-.back-month {
+.back-calendar {
   width: 100%;
   height: 46px;
   cursor: pointer;
@@ -160,17 +160,56 @@
 }
 
 .back-btn {
-  position: absolute;
-  top: 15px;
-  left: 115px;
   width: 18px;
   height: 18px;
   background: url(BMW-pos_nav_previous_18.png);
+  font-size: 17px;
+  transform: translate(-50%, 3px);
 }
 
-.month-text {
-  margin-left: 15px;
-  font-size: 17px;
+.back-label {
+  line-height: 24px;
+}
+
+.appointment-info {
+  margin: 1.5rem;
+}
+
+.appointment-info .info {
+  line-height: 10px;
+  padding-top: 1rem;
+}
+
+.appointment-info .info:first-child {
+  padding-top: 0;
+}
+
+.appointment-btns {
+  margin: 1rem;
+}
+
+.appointment-btns div {
+  width: 100%;
+  height: 50px;
+  border-top: 1px solid #262626;
+  padding-top: 13px;
+}
+
+.appointment-btns .times {
+  height: auto;
+  padding: 0;
+}
+
+.appointment-btns .time {
+  margin: 1rem;
+  width: auto;
+  border-top: none;
+  border-bottom: 1px solid #262626;
+  height: 40px;
+}
+
+.appointment-btns div:last-child {
+  border-bottom: 1px solid #262626;
 }
 
 .general-btn {
@@ -386,6 +425,13 @@
   transform: translate(-50%, -50%);
   width: 100%;
   left: 50%;
+}
+
+.appointment-title {
+  margin: 2rem 2rem 0 2rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #BBBBBB;
+  width: 80%;
 }
 
 .close-btn {
