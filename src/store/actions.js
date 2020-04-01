@@ -7,7 +7,6 @@ import {
   ADD_TIME_SLOTS_STARTED,
   PAGE_NAVIGATION,
   SAVE_DATE,
-  SAVE_DATE_IN_FORMAT,
   SET_FLOW_MODE,
   SET_TIME_SLOT
 } from "./types";
@@ -56,11 +55,6 @@ export const setPageID = id => ({
 
 export const setDate = date => ({
   type: SAVE_DATE,
-  payload: date
-});
-
-export const setDateInFormat = date => ({
-  type: SAVE_DATE_IN_FORMAT,
   payload: date
 });
 

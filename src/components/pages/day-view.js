@@ -44,14 +44,11 @@ class DayView extends React.Component {
       onBackMonth1,
       onBackMonth2,
       timeSlots,
-      dateInFormat,
       selectedDate,
       appointments
     } = this.props;
 
-    const month = moment(new Date(selectedDate)).month();
-    const day = moment(new Date(selectedDate)).date();
-    const weekNo = moment(new Date(selectedDate)).week();
+    const month = moment(selectedDate).month();
     const headerByFlow = this.checkFlowisOne()
       ? HEADERS.calendar
       : HEADERS.testDriveDate;
@@ -61,12 +58,18 @@ class DayView extends React.Component {
     const onBackMonth = () =>
       this.checkFlowisOne() ? onBackMonth1() : onBackMonth2();
 
+    const WeeksView = (
+      <div className="weeks-view">
+        <WeekLine />
+        <WeekView />
+      </div>
+    );
+
     const MainView = (
       <>
         <BackCalendar onClick={onBackMonth} label={months[month]} />
-        <WeekLine />
-        <WeekView week={weekNo} day={day} />
-        <SelectedDate date={dateInFormat} />
+        {WeeksView}
+        <SelectedDate />
       </>
     );
 

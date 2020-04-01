@@ -1,14 +1,10 @@
-import React from "react";
+import React, { createRef } from "react";
 import { connect } from "react-redux";
-import { setDateInFormat, setDate } from "../../../store/actions";
-import { dayIDsInWeek, formatDate } from "../../utils";
+import { setDate } from "../../../store/actions";
+import { dayIDsInWeek } from "../../utils";
 import moment from "moment";
 
 class WeekView extends React.Component {
-  state = {
-    selectedDate: ""
-  };
-
   getDaysFromWeek = week => {
     return dayIDsInWeek().map(d =>
       moment()
@@ -18,54 +14,60 @@ class WeekView extends React.Component {
     );
   };
 
+  weekViewRef = createRef();
+
   isDayChecked = day => {
-    return this.props.day === day;
+    const selectedDay = moment(this.props.selectedDate).date();
+    return selectedDay === day;
   };
 
   onDayChange = e => {
-    const day = e.target.value;
-    let selected = moment(this.props.selectedDate);
-    this.updateDate(selected.year(), selected.month(), day);
-    this.updateDateInFormat(
-      selected.year(),
-      selected.month(),
-      selected.day(),
-      day
-    );
+    const selectedDay = e.target.value;
+    const selected = moment(this.props.selectedDate);
+    this.updateDate(selected.year(), selected.month(), selectedDay);
   };
 
-  updateDateInFormat(yr, mon, wk, day) {
-    const dateInFormat = formatDate(yr, mon, wk, day);
-    this.props.setDateInFormat(dateInFormat);
-  }
-
   updateDate(yr, mon, day) {
-    const selectedDate = moment(new Date(yr, mon, day)).format("MM/DD/YYYY");
+    const selectedDate = moment(new Date(yr, mon, day), "YYYY MM DD");
     this.props.setDate(selectedDate);
   }
 
+  getWidthOfPerItem() {
+    const percentage = 0.103;
+    return window.screen.width * percentage;
+  }
+
   render() {
-    const width = 37;
-    const { day } = this.props;
-    const styleDayPosition = (id, selectedDay) => {
-      return day === selectedDay
-        ? {
-            transform: `translateX(${id * width}px`,
-            borderRadius: "50%",
-            color: "#ffffff",
-            backgroundColor: "#0653b6",
-            fontWeight: "bold"
-          }
-        : {
-            transform: `translateX(${id * width}px`
-          };
+    const width = this.getWidthOfPerItem();
+    const { selectedDate } = this.props;
+    const weekNo = moment(selectedDate).isoWeek();
+    const selectedDay = moment(selectedDate).date();
+
+    const styleDayPosition = (id, day) => {
+      if (Math.abs(day - selectedDay) > 6) {
+        return {
+          display: "none"
+        };
+      } else if (day === selectedDay) {
+        return {
+          transform: `translateX(${id * width}px`,
+          borderRadius: "50%",
+          color: "#ffffff",
+          backgroundColor: "#0653b6",
+          fontWeight: "bold"
+        };
+      } else {
+        return {
+          transform: `translateX(${id * width}px`
+        };
+      }
     };
 
     return (
-      <div className="week-view">
-        <span className="week-no">{this.props.week}</span>
+      <div ref={this.weekViewRef} className="week-view">
+        <span className="week-no">{weekNo}</span>
         <div className="week-days d-flex">
-          {this.getDaysFromWeek(this.props.week).map((day, id) => (
+          {this.getDaysFromWeek(weekNo).map((day, id) => (
             <label
               key={id}
               className="position-absolute day"
@@ -94,7 +96,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDateInFormat: date => dispatch(setDateInFormat(date)),
     setDate: date => dispatch(setDate(date))
   };
 };

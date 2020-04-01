@@ -16,8 +16,9 @@ class MonthLine extends React.Component {
     const selectedMon = this.props.month;
     const selectedDay = this.getDaysArray(selectedYear, selectedMon)[id].day;
     const selectedDate = moment(
-      new Date(selectedYear, selectedMon, selectedDay)
-    ).format("MM/DD/YYYY");
+      new Date(selectedYear, selectedMon, selectedDay),
+      "YYYY MM DD"
+    );
     const { setDate, goToDayPageFlow1, goToDayPageFlow2 } = this.props;
     setDate(selectedDate);
     if (this.checkFlowisOne()) goToDayPageFlow1();
@@ -35,11 +36,16 @@ class MonthLine extends React.Component {
     return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
   };
 
+  getWidthOfPerItem() {
+    const percentage = 0.104;
+    return window.screen.width * percentage;
+  }
+
   getDaysArray = (year, month) => {
     let weekNo = 0;
     let index = days[new Date(year, month, 1).toString().split(" ")[0]];
     let daysArray = [];
-    const width = 37;
+    const width = this.getWidthOfPerItem();
     const height = 42;
 
     for (let i = 0, l = this.getDaysInMonth(year, month); i < l; i++) {

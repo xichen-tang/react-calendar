@@ -68,8 +68,10 @@
 }
 
 .month-view {
+  /* width: 80%; */
   height: 80%;
-  overflow: auto;
+  /* margin: auto; */
+  overflow-y: auto;
 }
 
 .title {
@@ -244,14 +246,13 @@
 
 .days {
   padding-top: 15px;
+  padding-left: 8%;
   height: 260px;
-  width: 75%;
   position: relative;
-  margin: auto;
 }
 
 .date {
-  margin: 50px 1rem 1rem 1rem;
+  margin: 0 1rem 1rem 1rem;
   border-top: 1px solid#262626;
   font-family: "BMWTypeNextBold";
 }
@@ -274,7 +275,6 @@
 
 .weeks {
   height: 45px;
-  padding-left: 30px;
   font-size: 14px;
 }
 
@@ -294,14 +294,15 @@
   margin: auto;
 }
 
+.weeks-view {
+  width: 80%;
+  margin: auto;
+}
+
 .week-view {
   height: 50px;
   border-top: 1px solid #e6e6e6;
-  position: absolute;
-  width: 79%;
-  margin-left: 15px;
   padding-top: 6px;
-  padding-left: 17px;
 }
 
 .day {

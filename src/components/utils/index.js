@@ -7,7 +7,8 @@ import {
 } from "../constant";
 
 export const formatDate = (year, month, week, day) => {
-  return `${weeks[week - 1]} ${day}. ${months[month]} ${year}`;
+  if (week > 0) return `${weeks[week - 1]} ${day}. ${months[month]} ${year}`;
+  return `${weeks[6]} ${day}. ${months[month]} ${year}`;
 };
 
 export const DAYS_LIST_IN_WEEK = [1, 2, 3, 4, 5, 6, 7];
@@ -24,20 +25,10 @@ export const getCurDate = () => {
     month: moment().month(),
     week: moment().day(),
     day: moment().date(),
-    weekNo: moment().week()
+    weekNo: moment().isoWeek()
   };
 };
 
 export const initCurDate = () => {
-  return moment(new Date()).format("MM/DD/YYYY");
-};
-
-export const initCurDateFormat = () => {
-  const dateInFormat = formatDate(
-    getCurDate().year,
-    getCurDate().month,
-    getCurDate().week,
-    getCurDate().day
-  );
-  return dateInFormat;
+  return moment().format("YYYY MM DD");
 };

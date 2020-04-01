@@ -80,7 +80,7 @@ class MonthView extends React.Component {
     );
 
     const WeekLineView = (
-      <div className="text-center pl-3">
+      <div className="text-center weeks-view">
         <WeekLine />
       </div>
     );

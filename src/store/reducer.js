@@ -7,12 +7,11 @@ import {
   ADD_TIME_SLOTS_FAILURE,
   PAGE_NAVIGATION,
   SAVE_DATE,
-  SAVE_DATE_IN_FORMAT,
   SET_FLOW_MODE,
   SET_TIME_SLOT
 } from "./types";
 import { FLOW_MODES } from "../components/constant";
-import { initCurDate, initCurDateFormat } from "../components/utils";
+import { initCurDate } from "../components/utils";
 
 const initialState = {
   mode: FLOW_MODES.initial,
@@ -22,7 +21,6 @@ const initialState = {
   timeSlots: [],
   pageID: 0,
   selectedDate: initCurDate(),
-  dateInFormat: initCurDateFormat(),
   appointmentTime: {}
 };
 
@@ -42,11 +40,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedDate: action.payload
-      };
-    case SAVE_DATE_IN_FORMAT:
-      return {
-        ...state,
-        dateInFormat: action.payload
       };
     case SET_TIME_SLOT:
       return {
