@@ -1,13 +1,10 @@
 import React from "react";
+import { getResponsiveWidth } from "../../utils";
 import { ONE_LETTER_WEEKS as weeks } from "../../constant";
 
 export default class WeekLine extends React.Component {
-  getWidthOfPerItem() {
-    const percentage = 0.103;
-    return window.screen.width * percentage;
-  }
   render() {
-    const width = this.getWidthOfPerItem();
+    const width = getResponsiveWidth();
     const styleWeekLine = id => {
       return {
         transform: `translateX(${id * width}px)`

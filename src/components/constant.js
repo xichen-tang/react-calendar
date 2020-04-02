@@ -152,3 +152,7 @@ export const COLOR_SCHEMA = {
   blueBackground: "#1c69d4",
   greyBackground: "#666666"
 };
+
+export const MODAL_WIDTH = 375;
+
+export const WIDTH_PERCENTAGE = 0.103;

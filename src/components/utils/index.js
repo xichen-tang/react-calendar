@@ -1,4 +1,6 @@
 import moment from "moment";
+import { isMobile } from "react-device-detect";
+import { MODAL_WIDTH, WIDTH_PERCENTAGE } from "../constant";
 
 import {
   DANISH_MONTHS as months,
@@ -31,4 +33,10 @@ export const getCurDate = () => {
 
 export const initCurDate = () => {
   return moment().format("YYYY MM DD");
+};
+
+export const getResponsiveWidth = () => {
+  return isMobile
+    ? window.screen.width * WIDTH_PERCENTAGE
+    : MODAL_WIDTH * WIDTH_PERCENTAGE;
 };

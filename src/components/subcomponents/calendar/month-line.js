@@ -9,6 +9,7 @@ import {
   DAYS_COUNT_IN_WEEK,
   FLOW_MODES as modes
 } from "../../constant";
+import { getResponsiveWidth } from "../../utils";
 
 class MonthLine extends React.Component {
   handleClickDay = id => {
@@ -36,16 +37,11 @@ class MonthLine extends React.Component {
     return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
   };
 
-  getWidthOfPerItem() {
-    const percentage = 0.104;
-    return window.screen.width * percentage;
-  }
-
   getDaysArray = (year, month) => {
     let weekNo = 0;
     let index = days[new Date(year, month, 1).toString().split(" ")[0]];
     let daysArray = [];
-    const width = this.getWidthOfPerItem();
+    const width = getResponsiveWidth();
     const height = 42;
 
     for (let i = 0, l = this.getDaysInMonth(year, month); i < l; i++) {

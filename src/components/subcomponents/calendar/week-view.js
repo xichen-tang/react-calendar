@@ -1,7 +1,7 @@
 import React, { createRef } from "react";
 import { connect } from "react-redux";
 import { setDate } from "../../../store/actions";
-import { dayIDsInWeek } from "../../utils";
+import { dayIDsInWeek, getResponsiveWidth } from "../../utils";
 import moment from "moment";
 
 class WeekView extends React.Component {
@@ -32,13 +32,8 @@ class WeekView extends React.Component {
     this.props.setDate(selectedDate);
   }
 
-  getWidthOfPerItem() {
-    const percentage = 0.103;
-    return window.screen.width * percentage;
-  }
-
   render() {
-    const width = this.getWidthOfPerItem();
+    const width = getResponsiveWidth();
     const { selectedDate } = this.props;
     const weekNo = moment(selectedDate).isoWeek();
     const selectedDay = moment(selectedDate).date();
