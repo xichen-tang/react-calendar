@@ -109,8 +109,8 @@ class ViewAppointment extends React.Component {
       if (mode === 1) {
         return (
           <div className="appointment-btns text-center mt-5">
-            <div className="">Ændre aftale</div>
-            <div className="">Slet aftale</div>
+            <div className="apt-btn">Ændre aftale</div>
+            <div className="apt-btn">Slet aftale</div>
           </div>
         );
       } else {

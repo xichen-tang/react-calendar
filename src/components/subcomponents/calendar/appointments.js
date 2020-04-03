@@ -155,7 +155,7 @@ const mapDispatchToProps = dispatch => {
   return {
     gotoNewAppointment: () => dispatch(setPageID(PAGE_INDEX.NEW_APPOINTMENT)),
     gotoAppointmentView1: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_1)),
-    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2_1)),
+    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2)),
     setTimeSlot: timeObj => dispatch(setTimeSlot(timeObj))
   };
 };
