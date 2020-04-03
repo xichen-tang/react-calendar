@@ -93,8 +93,7 @@ const mapStateToProps = state => {
   return {
     timeSlots: state.timeSlots,
     appointments: state.appointments,
-    selectedDate: state.selectedDate,
-    dateInFormat: state.dateInFormat
+    selectedDate: state.selectedDate
   };
 };
 

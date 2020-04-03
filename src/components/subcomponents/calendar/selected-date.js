@@ -12,10 +12,7 @@ class SelectedDate extends React.Component {
     const day = moment(selectedDate).date();
 
     return (
-      <div className="date text-center p-3">
-        {formatDate(yr, mon, wk, day)}
-        {wk}
-      </div>
+      <div className="date text-center p-3">{formatDate(yr, mon, wk, day)}</div>
     );
   }
 }

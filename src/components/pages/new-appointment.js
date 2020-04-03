@@ -3,7 +3,9 @@ import MainHeader from "../subcomponents/header/main-header";
 import FlowInput from "../subcomponents/input/flow-input";
 import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
+import moment from "moment";
 import { setPageID } from "../../store/actions";
+import { formatDate } from "../utils";
 import {
   HEADERS,
   BUTTON_LABELS,
@@ -15,18 +17,22 @@ import {
 class NewAppointment extends React.Component {
   render() {
     const {
+      selectedDate,
       appointmentTime,
-      dateInFormat,
       gotoStartPage,
       gotoDayView
     } = this.props;
+    const yr = moment(selectedDate).year();
+    const mon = moment(selectedDate).month();
+    const wk = moment(selectedDate).day();
+    const day = moment(selectedDate).date();
 
     const HeaderView = <MainHeader title={HEADERS.calendar} />;
 
     const startTimeLabel =
-      dateInFormat.slice(0, -4) + "kl " + appointmentTime.startTime;
+      formatDate(yr, mon, wk, day) + "kl " + appointmentTime.startTime;
     const endTimeLabel =
-      dateInFormat.slice(0, -4) + "kl " + appointmentTime.endTime;
+      formatDate(yr, mon, wk, day) + "kl " + appointmentTime.endTime;
 
     const InputsView = (
       <div className="input-fields p-3 text-center">
@@ -65,8 +71,8 @@ class NewAppointment extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    dateInFormat: state.dateInFormat,
-    appointmentTime: state.appointmentTime
+    appointmentTime: state.appointmentTime,
+    selectedDate: state.selectedDate
   };
 };
 
