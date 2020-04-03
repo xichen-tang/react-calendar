@@ -36,7 +36,6 @@ class Calendar extends React.Component {
       <NewAppointment />,
       <AppointmentView mode={1} />,
       <AppointmentView mode={2} />,
-      <AppointmentView mode={3} />,
       <Success />
     ];
     return (

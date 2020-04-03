@@ -1,23 +1,49 @@
 import React from "react";
 import MainHeader from "../subcomponents/header/main-header";
 import BackCalendar from "../subcomponents/button/back-calendar";
+import moment from "moment";
 import { connect } from "react-redux";
 import { setPageID } from "../../store/actions";
-import { HEADERS, PAGE_INDEX } from "../constant";
+import {
+  HEADERS,
+  PAGE_INDEX,
+  DANISH_MONTHS as months,
+  DANISH_WEEKS as weeks
+} from "../constant";
 import GeneralButton from "../subcomponents/button/general-btn";
+
 class ViewAppointment extends React.Component {
+  state = {
+    inputType: "text",
+    viewTimeChange: false
+  };
+
+  convertInputType = () => {
+    this.setState({ inputType: "datetime-local" });
+  };
+
+  onClickChangeTime = () => {
+    this.setState({ viewTimeChange: true });
+  };
+
+  onClickCloseTime = () => {
+    this.setState({ viewTimeChange: false, inputType: "text" });
+  };
+
   render() {
-    const {
-      onBackDayView,
-      gotoAppointmentView1,
-      gotoAppointmentView2,
-      mode
-    } = this.props;
+    const { onBackDayView, selectedDate, mode } = this.props;
 
     const HeaderView = <MainHeader title={HEADERS.calendar} />;
 
+    // Mandag 1. februar
+    const mon = moment(selectedDate).month();
+    const wk = moment(selectedDate).day();
+    const day = moment(selectedDate).date();
     const BackView = (
-      <BackCalendar onClick={onBackDayView} label={"Mandag 1. februar"} />
+      <BackCalendar
+        onClick={onBackDayView}
+        label={`${weeks[wk]} ${day}. ${months[mon]}`}
+      />
     );
 
     const DetailView = (
@@ -40,6 +66,45 @@ class ViewAppointment extends React.Component {
       </div>
     );
 
+    const { inputType, viewTimeChange } = this.state;
+
+    const beforeDateTimeView = (
+      <>
+        <div className="apt-btn" onClick={this.onClickChangeTime}>
+          Skift tidspunkt
+        </div>
+        <div className="apt-btn">Se køreseddel</div>
+        <div className="apt-btn">Se kørekort</div>
+        <div className="apt-btn">Slet prøvekørsel</div>
+      </>
+    );
+
+    const updateDateTimeView = (
+      <>
+        <div className="times">
+          <div className="date-time-picker">
+            <input
+              placeholder="Fra mandag 1. februar kl 01:00"
+              type={inputType}
+              onFocus={this.convertInputType}
+            />
+          </div>
+          <div className="date-time-picker">
+            <input
+              placeholder="Fra mandag 1. februar kl 01:00"
+              type={inputType}
+              onFocus={this.convertInputType}
+            />
+          </div>
+        </div>
+        <GeneralButton
+          label="Opdater køreseddel"
+          mode="confirm"
+          onClick={this.onClickCloseTime}
+        />
+      </>
+    );
+
     const ButtonsView = () => {
       if (mode === 1) {
         return (
@@ -48,29 +113,10 @@ class ViewAppointment extends React.Component {
             <div className="">Slet aftale</div>
           </div>
         );
-      } else if (mode === 2) {
-        return (
-          <div className="appointment-btns text-center">
-            <div className="" onClick={gotoAppointmentView2}>
-              Skift tidspunkt
-            </div>
-            <div className="">Se køreseddel</div>
-            <div className="">Se kørekort</div>
-            <div className="">Slet prøvekørsel</div>
-          </div>
-        );
       } else {
         return (
           <div className="appointment-btns text-center">
-            <div className="times">
-              <div className="time">Fra mandag 1. februar kl 01:00</div>
-              <div className="time">Til mandag 1. februar kl 01:30</div>
-            </div>
-            <GeneralButton
-              label="Opdater køreseddel"
-              mode="confirm"
-              onClick={gotoAppointmentView1}
-            />
+            {viewTimeChange ? updateDateTimeView : beforeDateTimeView}
           </div>
         );
       }
@@ -87,12 +133,16 @@ class ViewAppointment extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    onBackDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)),
-    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2_2)),
-    gotoAppointmentView1: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2_1))
+    selectedDate: state.selectedDate
   };
 };
 
-export default connect(null, mapDispatchToProps)(ViewAppointment);
+const mapDispatchToProps = dispatch => {
+  return {
+    onBackDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewAppointment);

@@ -14,8 +14,7 @@ export const PAGE_INDEX = {
   NEW_APPOINTMENT: 12,
   APPOINTMENT_1: 13,
   APPOINTMENT_2_1: 14,
-  APPOINTMENT_2_2: 15,
-  DONE: 16
+  DONE: 15
 };
 
 export const HEADERS = {
