@@ -1,9 +1,10 @@
 import React from "react";
 import Camera from "react-html5-camera-photo";
+import "react-html5-camera-photo/build/css/index.css";
 import MainHeader from "../subcomponents/header/main-header";
 import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
-import { setPageID } from "../../store/actions";
+import { setPageID, setPhoto } from "../../store/actions";
 import {
   PAGE_INDEX,
   DESCRIPTIONS,
@@ -11,6 +12,7 @@ import {
   BUTTON_MODES,
   HEADERS
 } from "../constant";
+
 class Picture extends React.Component {
   state = {
     isShownCamera: false
@@ -18,15 +20,12 @@ class Picture extends React.Component {
 
   showCamera = () => {
     this.setState({ isShownCamera: true });
-
-    // not tested on mobile
-    setTimeout(() => {
-      this.props.onClickTakePicture();
-    }, 5000);
   };
 
   handleTakePhoto = dataUri => {
-    // save the image uri
+    if (!this.state.isShownCamera) return;
+    this.props.setPhoto(dataUri);
+    this.props.onClickTakePicture();
   };
 
   render() {
@@ -56,12 +55,18 @@ class Picture extends React.Component {
       </div>
     );
 
-    return (
-      <div className="p-4 position-relative">
+    const MainView = (
+      <>
         <MainHeader title={HEADERS.takePicture} />
         {DescriptionView}
         {ContinueButton}
+      </>
+    );
+
+    return (
+      <div className="p-4 position-relative w-100 vh-100">
         {isShownCamera && CameraView}
+        {!isShownCamera && MainView}
       </div>
     );
   }
@@ -69,6 +74,7 @@ class Picture extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setPhoto: dataUri => dispatch(setPhoto(dataUri)),
     onClickTakePicture: () =>
       dispatch(setPageID(PAGE_INDEX.TERMS_AND_CONDITIONS))
   };

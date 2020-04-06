@@ -1,24 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setPageID } from "../../store/actions";
+import { setPageID, setSignature } from "../../store/actions";
 import { PAGE_INDEX, HEADERS, BUTTON_LABELS } from "../constant";
 import SignatureCanvas from "react-signature-canvas";
 
 class Signature extends React.Component {
-  state = {
-    trimmedDataURL: null
-  };
-
   sigPad = {};
 
   clear = () => {
     this.sigPad.clear();
   };
 
-  trim = () => {
-    this.setState({
-      trimmedDataURL: this.sigPad.getTrimmedCanvas().toDataURL("image/png")
-    });
+  onClickContinue = () => {
+    this.props.saveSignature(
+      this.sigPad.getTrimmedCanvas().toDataURL("image/png")
+    );
     this.props.onClickContinue();
   };
 
@@ -26,7 +22,7 @@ class Signature extends React.Component {
     const HeaderView = (
       <div className="rotated-header d-flex">
         <p>{HEADERS.flipPhoneToSign}</p>
-        <button onClick={this.trim}>{BUTTON_LABELS.continue}</button>
+        <button onClick={this.onClickContinue}>{BUTTON_LABELS.continue}</button>
       </div>
     );
 
@@ -58,6 +54,7 @@ class Signature extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    saveSignature: url => dispatch(setSignature(url)),
     onClickContinue: () => dispatch(setPageID(PAGE_INDEX.DONE))
   };
 };

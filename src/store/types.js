@@ -17,3 +17,7 @@ export const ADD_TIME_SLOTS_FAILURE = "ADD_TIME_SLOTS_FAILURE";
 export const SAVE_DATE = "SAVE_DATE";
 
 export const SET_TIME_SLOT = "SET_TIME_SLOT";
+
+export const SET_PHOTO = "SET_PHOTO";
+
+export const SET_SIGNATURE = "SET_SIGNATURE";

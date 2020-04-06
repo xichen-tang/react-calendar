@@ -8,7 +8,9 @@ import {
   PAGE_NAVIGATION,
   SAVE_DATE,
   SET_FLOW_MODE,
-  SET_TIME_SLOT
+  SET_TIME_SLOT,
+  SET_PHOTO,
+  SET_SIGNATURE
 } from "./types";
 import { FLOW_MODES } from "../components/constant";
 import { initCurDate } from "../components/utils";
@@ -21,7 +23,9 @@ const initialState = {
   timeSlots: [],
   pageID: 0,
   selectedDate: initCurDate(),
-  appointmentTime: {}
+  appointmentTime: {},
+  photo: "",
+  signature: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -45,6 +49,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         appointmentTime: action.payload
+      };
+    case SET_PHOTO:
+      return {
+        ...state,
+        photoUri: action.payload
+      };
+    case SET_SIGNATURE:
+      return {
+        ...state,
+        signature: action.payload
       };
     case ADD_TIME_SLOTS_STARTED:
       return {

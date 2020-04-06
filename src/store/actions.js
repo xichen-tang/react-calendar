@@ -8,7 +8,9 @@ import {
   PAGE_NAVIGATION,
   SAVE_DATE,
   SET_FLOW_MODE,
-  SET_TIME_SLOT
+  SET_TIME_SLOT,
+  SET_PHOTO,
+  SET_SIGNATURE
 } from "./types";
 import axios from "axios";
 
@@ -61,6 +63,16 @@ export const setDate = date => ({
 export const setTimeSlot = time => ({
   type: SET_TIME_SLOT,
   payload: time
+});
+
+export const setPhoto = dataUri => ({
+  type: SET_PHOTO,
+  payload: dataUri
+});
+
+export const setSignature = data => ({
+  type: SET_SIGNATURE,
+  payload: data
 });
 
 export const addAppointmentStarted = () => ({
