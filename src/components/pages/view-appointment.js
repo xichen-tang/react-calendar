@@ -39,12 +39,13 @@ class ViewAppointment extends React.Component {
     const mon = moment(selectedDate).month();
     const wk = moment(selectedDate).day();
     const day = moment(selectedDate).date();
-    const BackView = (
-      <BackCalendar
-        onClick={onBackDayView}
-        label={`${weeks[wk]} ${day}. ${months[mon]}`}
-      />
-    );
+    const aptDate = `${weeks[wk]} ${day}. ${months[mon]}`;
+    const BackView = <BackCalendar onClick={onBackDayView} label={aptDate} />;
+
+    const yr = moment(selectedDate).year();
+    // data need to update backend
+    const from = "01:00";
+    const to = "01:30";
 
     const DetailView = (
       <div className="appointment-info">
@@ -53,8 +54,12 @@ class ViewAppointment extends React.Component {
           <p className="">Tlf: 1234 5678</p>
         </div>
         <div className="info">
-          <p className="">Mandag 1. februar 2020</p>
-          <p className="">Fra 01:00 til 01:30</p>
+          <p className="">
+            {aptDate} {yr}
+          </p>
+          <p className="">
+            Fra {from} til {to}
+          </p>
         </div>
         <div className="info">
           <p className="">BMW 320i Sedan Connected</p>
