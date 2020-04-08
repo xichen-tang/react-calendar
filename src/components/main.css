@@ -374,6 +374,20 @@
   position: absolute;
   left: 0;
   top: 0;
+  width: 100%;
+}
+
+.react-html5-camera-photo video {
+  width: 134vh;
+}
+
+.react-html5-camera-photo img {
+  width: 134vh;
+}
+
+#container-circles {
+  top: 100%;
+  margin-top: -128px;
 }
 
 .rdp-picker {
@@ -455,6 +469,20 @@
   cursor: pointer;
 }
 
-#container-circles {
-  top: 70%;
+
+.signature canvas {
+  position: absolute;
+  left: 0;
+}
+
+.signature .clear-sign {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-right: 24px;
+  margin-top: -55px;
+  background: #666666;
+  border: white;
+  color: white;
+  font-weight: bold;
 }

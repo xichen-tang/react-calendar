@@ -5,6 +5,27 @@ import { PAGE_INDEX, HEADERS, BUTTON_LABELS } from "../constant";
 import SignatureCanvas from "react-signature-canvas";
 
 class Signature extends React.Component {
+  state = {
+    clientWidth: 0,
+    clientHeight: 0
+  };
+
+  componentDidMount() {
+    this.updateClientRect();
+    window.addEventListener("resize", this.updateClientRect);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateClientRect);
+  }
+
+  updateClientRect = () => {
+    this.setState({
+      clientWidth: window.innerWidth,
+      clientHeight: window.innerHeight
+    });
+  };
+
   sigPad = {};
 
   clear = () => {
@@ -26,10 +47,12 @@ class Signature extends React.Component {
       </div>
     );
 
+    const { clientWidth, clientHeight } = this.state;
+
     const SignatureView = (
       <SignatureCanvas
         penColor="blue"
-        canvasProps={{ width: 635, height: 250 }}
+        canvasProps={{ width: clientWidth, height: clientHeight }}
         ref={ref => {
           this.sigPad = ref;
         }}
@@ -43,7 +66,7 @@ class Signature extends React.Component {
     );
 
     return (
-      <div className="p-4 position-relative">
+      <div className="p-4 position-relative w-100 vh-100 signature">
         {HeaderView}
         {SignatureView}
         {ClearSignature}
