@@ -8,14 +8,15 @@ import {
   HEADERS,
   PAGE_INDEX,
   DANISH_MONTHS as months,
-  DANISH_WEEKS as weeks
+  DANISH_WEEKS as weeks,
+  DATE_FORMAT,
 } from "../constant";
 import GeneralButton from "../subcomponents/button/general-btn";
 
 class ViewAppointment extends React.Component {
   state = {
     inputType: "text",
-    viewTimeChange: false
+    viewTimeChange: false,
   };
 
   convertInputType = () => {
@@ -36,13 +37,13 @@ class ViewAppointment extends React.Component {
     const HeaderView = <MainHeader title={HEADERS.calendar} />;
 
     // Mandag 1. februar
-    const mon = moment(selectedDate).month();
-    const wk = moment(selectedDate).day();
-    const day = moment(selectedDate).date();
+    const mon = moment(selectedDate, DATE_FORMAT).month();
+    const wk = moment(selectedDate, DATE_FORMAT).day();
+    const day = moment(selectedDate, DATE_FORMAT).date();
     const aptDate = `${weeks[wk]} ${day}. ${months[mon]}`;
     const BackView = <BackCalendar onClick={onBackDayView} label={aptDate} />;
 
-    const yr = moment(selectedDate).year();
+    const yr = moment(selectedDate, DATE_FORMAT).year();
     // data need to update backend
     const from = "01:00";
     const to = "01:30";
@@ -138,15 +139,15 @@ class ViewAppointment extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    selectedDate: state.selectedDate
+    selectedDate: state.selectedDate,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onBackDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2))
+    onBackDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)),
   };
 };
 

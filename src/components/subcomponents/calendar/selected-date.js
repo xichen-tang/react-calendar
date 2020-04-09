@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { formatDate } from "../../utils";
+import { DATE_FORMAT } from "../../constant";
 import moment from "moment";
 
 class SelectedDate extends React.Component {
   render() {
     const { selectedDate } = this.props;
-    const yr = moment(selectedDate).year();
-    const mon = moment(selectedDate).month();
-    const wk = moment(selectedDate).day();
-    const day = moment(selectedDate).date();
+    const yr = moment(selectedDate, DATE_FORMAT).year();
+    const mon = moment(selectedDate, DATE_FORMAT).month();
+    const wk = moment(selectedDate, DATE_FORMAT).day();
+    const day = moment(selectedDate, DATE_FORMAT).date();
 
     return (
       <div className="date text-center p-3">{formatDate(yr, mon, wk, day)}</div>
@@ -17,9 +18,9 @@ class SelectedDate extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    selectedDate: state.selectedDate
+    selectedDate: state.selectedDate,
   };
 };
 

@@ -5,7 +5,8 @@ import { MODAL_WIDTH, WIDTH_PERCENTAGE } from "../constant";
 import {
   DANISH_MONTHS as months,
   DANISH_WEEKS as weeks,
-  DAYS_COUNT_IN_WEEK as dayCount
+  DAYS_COUNT_IN_WEEK as dayCount,
+  DATE_FORMAT,
 } from "../constant";
 
 export const formatDate = (year, month, week, day) => {
@@ -27,12 +28,12 @@ export const getCurDate = () => {
     month: moment().month(),
     week: moment().day(),
     day: moment().date(),
-    weekNo: moment().isoWeek()
+    weekNo: moment().isoWeek(),
   };
 };
 
 export const initCurDate = () => {
-  return moment().format("YYYY MM DD");
+  return moment().format(DATE_FORMAT);
 };
 
 export const getResponsiveWidth = () => {

@@ -2,46 +2,42 @@ import React, { createRef } from "react";
 import { connect } from "react-redux";
 import { setDate } from "../../../store/actions";
 import { dayIDsInWeek, getResponsiveWidth } from "../../utils";
+import { DATE_FORMAT } from "../../constant";
 import moment from "moment";
 
 class WeekView extends React.Component {
-  getDaysFromWeek = week => {
-    return dayIDsInWeek().map(d =>
-      moment()
-        .week(week)
-        .day(d)
-        .date()
-    );
+  getDaysFromWeek = (week) => {
+    return dayIDsInWeek().map((d) => moment().week(week).day(d).date());
   };
 
   weekViewRef = createRef();
 
-  isDayChecked = day => {
-    const selectedDay = moment(this.props.selectedDate).date();
+  isDayChecked = (day) => {
+    const selectedDay = moment(this.props.selectedDate, DATE_FORMAT).date();
     return selectedDay === day;
   };
 
-  onDayChange = e => {
+  onDayChange = (e) => {
     const selectedDay = e.target.value;
-    const selected = moment(this.props.selectedDate);
+    const selected = moment(this.props.selectedDate, DATE_FORMAT);
     this.updateDate(selected.year(), selected.month(), selectedDay);
   };
 
   updateDate(yr, mon, day) {
-    const selectedDate = moment(new Date(yr, mon, day), "YYYY MM DD");
+    const selectedDate = moment(new Date(yr, mon, day), DATE_FORMAT);
     this.props.setDate(selectedDate);
   }
 
   render() {
     const width = getResponsiveWidth();
     const { selectedDate } = this.props;
-    const weekNo = moment(selectedDate).isoWeek();
-    const selectedDay = moment(selectedDate).date();
+    const weekNo = moment(selectedDate, DATE_FORMAT).isoWeek();
+    const selectedDay = moment(selectedDate, DATE_FORMAT).date();
 
     const styleDayPosition = (id, day) => {
       if (Math.abs(day - selectedDay) > 6) {
         return {
-          display: "none"
+          display: "none",
         };
       } else if (day === selectedDay) {
         return {
@@ -49,11 +45,11 @@ class WeekView extends React.Component {
           borderRadius: "50%",
           color: "#ffffff",
           backgroundColor: "#0653b6",
-          fontWeight: "bold"
+          fontWeight: "bold",
         };
       } else {
         return {
-          transform: `translateX(${id * width}px`
+          transform: `translateX(${id * width}px`,
         };
       }
     };
@@ -83,15 +79,15 @@ class WeekView extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    selectedDate: state.selectedDate
+    selectedDate: state.selectedDate,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setDate: date => dispatch(setDate(date))
+    setDate: (date) => dispatch(setDate(date)),
   };
 };
 

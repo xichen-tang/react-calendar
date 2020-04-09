@@ -10,14 +10,15 @@ import {
   PAGE_INDEX,
   HEADERS,
   DANISH_MONTHS as months,
-  FLOW_MODES as modes
+  FLOW_MODES as modes,
+  DATE_FORMAT,
 } from "../constant";
 import { connect } from "react-redux";
 import {
   getAvailableAppointments,
   getAvailableTimeSlots,
   setPageID,
-  setFlowMode
+  setFlowMode,
 } from "../../store/actions";
 import BackCalendar from "../subcomponents/button/back-calendar";
 
@@ -27,7 +28,7 @@ class DayView extends React.Component {
       getAvailableTimeSlots,
       getAvailableAppointments,
       setFlowMode1,
-      setFlowMode2
+      setFlowMode2,
     } = this.props;
     getAvailableTimeSlots();
     getAvailableAppointments();
@@ -40,15 +41,9 @@ class DayView extends React.Component {
   }
 
   render() {
-    const {
-      onBackMonth1,
-      onBackMonth2,
-      timeSlots,
-      selectedDate,
-      appointments
-    } = this.props;
+    const { onBackMonth1, onBackMonth2, timeSlots, selectedDate } = this.props;
 
-    const month = moment(selectedDate).month();
+    const month = moment(selectedDate, DATE_FORMAT).month();
     const headerByFlow = this.checkFlowisOne()
       ? HEADERS.calendar
       : HEADERS.testDriveDate;
@@ -74,7 +69,7 @@ class DayView extends React.Component {
     );
 
     const SlotsView = this.checkFlowisOne() ? (
-      <Appointments appointments={appointments} />
+      <Appointments />
     ) : (
       <TimeSlots timeSlots={timeSlots} />
     );
@@ -89,22 +84,21 @@ class DayView extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     timeSlots: state.timeSlots,
-    appointments: state.appointments,
-    selectedDate: state.selectedDate
+    selectedDate: state.selectedDate,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     setFlowMode1: () => dispatch(setFlowMode(modes.flow1)),
     setFlowMode2: () => dispatch(setFlowMode(modes.flow2)),
     onBackMonth1: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_1_2)),
     onBackMonth2: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_2_2)),
     getAvailableAppointments: () => dispatch(getAvailableAppointments()),
-    getAvailableTimeSlots: () => dispatch(getAvailableTimeSlots())
+    getAvailableTimeSlots: () => dispatch(getAvailableTimeSlots()),
   };
 };
 

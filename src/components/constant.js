@@ -14,7 +14,7 @@ export const PAGE_INDEX = {
   NEW_APPOINTMENT: 12,
   APPOINTMENT_1: 13,
   APPOINTMENT_2: 14,
-  DONE: 15
+  DONE: 15,
 };
 
 export const HEADERS = {
@@ -27,13 +27,13 @@ export const HEADERS = {
   takePicture: "Vi skal bruge et billede af kørekortet",
   flipPhoneToSign: "Vend telefonen om for at underskrive køresedlen",
   termsAndConditions: "Det her er vigtigt! Betingelser og samtykke",
-  done: "Færdig!"
+  done: "Færdig!",
 };
 
 export const FLOW_MODES = {
   initial: "Initial-Mode",
   flow2: "Add-Appointment-Flow",
-  flow1: "Start-Calendar-Flow"
+  flow1: "Start-Calendar-Flow",
 };
 
 export const DANISH_MONTHS = [
@@ -48,7 +48,7 @@ export const DANISH_MONTHS = [
   "September",
   "Oktober",
   "November",
-  "December"
+  "December",
 ];
 
 export const DANISH_WEEKS = [
@@ -58,7 +58,7 @@ export const DANISH_WEEKS = [
   "Torsdag",
   "Fredag",
   "Lørdag",
-  "Søndag"
+  "Søndag",
 ];
 
 export const ONE_LETTER_WEEKS = ["M", "T", "O", "T", "F", "L", "S"];
@@ -70,13 +70,13 @@ export const DAYS_INDEX = {
   Thu: 3,
   Fri: 4,
   Sat: 5,
-  Sun: 6
+  Sun: 6,
 };
 
 export const SUB_HEADERS = {
   latestLicensePlates: "Seneste anvendte prøveplader",
   termsAndConditions: "Vilkår og betingelser",
-  appointmentSubject: "Emne"
+  appointmentSubject: "Emne",
 };
 export const INPUT_LABELS = {
   ssn: "CPR-nummer",
@@ -92,7 +92,7 @@ export const INPUT_LABELS = {
   house: "Husnummer",
   zipCode: "Postnummer",
   city: "By",
-  samplePlate: "Prøveplade"
+  samplePlate: "Prøveplade",
 };
 
 export const BUTTON_LABELS = {
@@ -110,7 +110,7 @@ export const BUTTON_LABELS = {
   no: "Nej",
   saveAndClose: "Gem og luk",
   save: "Gem",
-  cancel: "Annuller"
+  cancel: "Annuller",
 };
 
 export const DESCRIPTIONS = {
@@ -123,13 +123,13 @@ export const DESCRIPTIONS = {
     "Herudover indsamler vi data til brug for dokumentation og analyse.",
     "Ovenstående er det grundlæggende i vores Vilkår og Betingelser.",
     "Du kan læse mere om vores vilkår og betingelser her.",
-    "Vil Du acceptere vores vilkår og betingelser?"
-  ]
+    "Vil Du acceptere vores vilkår og betingelser?",
+  ],
 };
 
 export const BUTTON_MODES = {
   confirm: "confirm",
-  manual: "manual"
+  manual: "manual",
 };
 
 export const PERSONAL_MODES = ["private", "advanced"];
@@ -144,14 +144,16 @@ export const SLOT_CONFIG = {
   nextSlot: 30,
   startTime: "00:00",
   endTime: "23:59",
-  heightPerThirtyMins: 36
+  heightPerThirtyMins: 36,
 };
 
 export const COLOR_SCHEMA = {
   blueBackground: "#1c69d4",
-  greyBackground: "#666666"
+  greyBackground: "#666666",
 };
 
 export const MODAL_WIDTH = 375;
 
 export const WIDTH_PERCENTAGE = 0.103;
+
+export const DATE_FORMAT = "YYYY MM DD";

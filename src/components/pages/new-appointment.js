@@ -11,7 +11,8 @@ import {
   BUTTON_LABELS,
   BUTTON_MODES,
   PAGE_INDEX,
-  SUB_HEADERS
+  SUB_HEADERS,
+  DATE_FORMAT,
 } from "../constant";
 
 class NewAppointment extends React.Component {
@@ -20,12 +21,12 @@ class NewAppointment extends React.Component {
       selectedDate,
       appointmentTime,
       gotoStartPage,
-      gotoDayView
+      gotoDayView,
     } = this.props;
-    const yr = moment(selectedDate).year();
-    const mon = moment(selectedDate).month();
-    const wk = moment(selectedDate).day();
-    const day = moment(selectedDate).date();
+    const yr = moment(selectedDate, DATE_FORMAT).year();
+    const mon = moment(selectedDate, DATE_FORMAT).month();
+    const wk = moment(selectedDate, DATE_FORMAT).day();
+    const day = moment(selectedDate, DATE_FORMAT).date();
 
     const HeaderView = <MainHeader title={HEADERS.calendar} />;
 
@@ -69,17 +70,17 @@ class NewAppointment extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     appointmentTime: state.appointmentTime,
-    selectedDate: state.selectedDate
+    selectedDate: state.selectedDate,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     gotoStartPage: () => dispatch(setPageID(PAGE_INDEX.START_PAGE)),
-    gotoDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2))
+    gotoDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)),
   };
 };
 

@@ -1,8 +1,8 @@
 [{
     "event": {
         "subject": "Bil udlånt til Nordania-blidag",
-        "start": "01:22",
-        "end": "02:22",
+        "start": "2020-04-09T02:22:00",
+        "end": "2020-04-09T02:42:00",
         "internal": true,
         "car": {
             "manufacturer": "BMW",
@@ -25,8 +25,8 @@
 }, {
     "event": {
         "subject": "Bil udlånt til Nordania-blidag",
-        "start": "10:35",
-        "end": "11:40",
+        "start": "2020-04-08T01:20:00",
+        "end": "2020-04-08T01:50:00",
         "internal": false,
         "car": {
             "manufacturer": "BMW",
