@@ -7,6 +7,7 @@ import ManualCustomer from "./pages/manual-customer";
 import SearchCustomer from "./pages/search-customer";
 import LicensePlate from "./pages/license-plate";
 import Picture from "./pages/picture";
+import CameraView from "./pages/camera";
 import TermsConditions from "./pages/terms-conditions";
 import Signature from "./pages/signature";
 import Success from "./pages/success";
@@ -31,13 +32,15 @@ class Calendar extends React.Component {
       <LicensePlate />,
       <LastInformation />,
       <Picture />,
+      <CameraView />,
       <TermsConditions />,
       <Signature />,
       <NewAppointment />,
       <AppointmentView mode={1} />,
       <AppointmentView mode={2} />,
-      <Success />
+      <Success />,
     ];
+
     return (
       <div className="main">
         <SimpleViewSlider>
@@ -48,9 +51,9 @@ class Calendar extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    pageID: state.pageID
+    pageID: state.pageID,
   };
 };
 

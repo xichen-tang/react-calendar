@@ -10,7 +10,7 @@ import {
   SET_FLOW_MODE,
   SET_TIME_SLOT,
   SET_PHOTO,
-  SET_SIGNATURE
+  SET_SIGNATURE,
 } from "./types";
 import { FLOW_MODES } from "../components/constant";
 import { initCurDate } from "../components/utils";
@@ -25,7 +25,7 @@ const initialState = {
   selectedDate: initCurDate(),
   appointmentTime: {},
   photo: "",
-  signature: ""
+  signature: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,68 +33,68 @@ const reducer = (state = initialState, action) => {
     case SET_FLOW_MODE:
       return {
         ...state,
-        mode: action.payload
+        mode: action.payload,
       };
     case PAGE_NAVIGATION:
       return {
         ...state,
-        pageID: action.payload
+        pageID: action.payload,
       };
     case SAVE_DATE:
       return {
         ...state,
-        selectedDate: action.payload
+        selectedDate: action.payload,
       };
     case SET_TIME_SLOT:
       return {
         ...state,
-        appointmentTime: action.payload
+        appointmentTime: action.payload,
       };
     case SET_PHOTO:
       return {
         ...state,
-        photoUri: action.payload
+        photoUri: action.payload,
       };
     case SET_SIGNATURE:
       return {
         ...state,
-        signature: action.payload
+        signature: action.payload,
       };
     case ADD_TIME_SLOTS_STARTED:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case ADD_TIME_SLOTS_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        timeSlots: action.payload
+        timeSlots: action.payload,
       };
 
     case ADD_TIME_SLOTS_FAILURE:
       return {
         ...state,
-        error: action.payload.err
+        error: action.payload.err,
       };
     case ADD_APPOINTMENT_STARTED:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case ADD_APPOINTMENT_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        appointments: action.payload
+        appointments: action.payload,
       };
 
     case ADD_APPOINTMENT_FAILURE:
       return {
         ...state,
-        error: action.payload.err
+        error: action.payload.err,
       };
     default:
       return state;

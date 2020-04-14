@@ -1,36 +1,23 @@
 import React from "react";
-import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import MainHeader from "../subcomponents/header/main-header";
 import GeneralButton from "../subcomponents/button/general-btn";
 import { connect } from "react-redux";
-import { setPageID, setPhoto } from "../../store/actions";
 import {
-  PAGE_INDEX,
   DESCRIPTIONS,
   BUTTON_LABELS,
   BUTTON_MODES,
-  HEADERS
+  HEADERS,
 } from "../constant";
+import { setPageID } from "../../store/actions";
+import { PAGE_INDEX } from "../constant";
 
 class Picture extends React.Component {
-  state = {
-    isShownCamera: false
-  };
-
-  showCamera = () => {
-    this.setState({ isShownCamera: true });
-  };
-
-  handleTakePhoto = dataUri => {
-    if (!this.state.isShownCamera) return;
-    this.props.setPhoto(dataUri);
-    this.props.onClickTakePicture();
+  onClickCameraView = () => {
+    this.props.goToCameraView();
   };
 
   render() {
-    const { isShownCamera } = this.state;
-
     const DescriptionView = (
       <div className="description p-4">{DESCRIPTIONS.takePicture}</div>
     );
@@ -40,17 +27,7 @@ class Picture extends React.Component {
         <GeneralButton
           label={BUTTON_LABELS.camera}
           mode={BUTTON_MODES.confirm}
-          onClick={this.showCamera}
-        />
-      </div>
-    );
-
-    const CameraView = (
-      <div className="camera">
-        <Camera
-          onTakePhoto={dataUri => {
-            this.handleTakePhoto(dataUri);
-          }}
+          onClick={this.onClickCameraView}
         />
       </div>
     );
@@ -63,20 +40,13 @@ class Picture extends React.Component {
       </>
     );
 
-    return (
-      <div className="p-4 position-relative w-100 vh-100">
-        {isShownCamera && CameraView}
-        {!isShownCamera && MainView}
-      </div>
-    );
+    return <div className="p-4 position-relative w-100 vh-100">{MainView}</div>;
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setPhoto: dataUri => dispatch(setPhoto(dataUri)),
-    onClickTakePicture: () =>
-      dispatch(setPageID(PAGE_INDEX.TERMS_AND_CONDITIONS))
+    goToCameraView: () => dispatch(setPageID(PAGE_INDEX.CAMERA_VIEW)),
   };
 };
 

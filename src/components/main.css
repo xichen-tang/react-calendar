@@ -370,13 +370,6 @@
   line-height: 16px;
 }
 
-.camera {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-
 .react-html5-camera-photo video {
   width: 134vh;
 }
@@ -470,7 +463,7 @@
 }
 
 
-.signature canvas {
+/* .signature canvas {
   position: absolute;
   left: 0;
 }
@@ -485,4 +478,4 @@
   border: white;
   color: white;
   font-weight: bold;
-}
+} */
