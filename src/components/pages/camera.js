@@ -4,23 +4,21 @@ import { connect } from "react-redux";
 import { setPageID, setPhoto } from "../../store/actions";
 import { PAGE_INDEX } from "../constant";
 
-class CameraView extends React.Component {
-  handleTakePhoto = (dataUri) => {
-    this.props.setPhoto(dataUri);
-    this.props.onClickTakePicture();
+function CameraView(props) {
+  const handleTakePhoto = (dataUri) => {
+    props.setPhoto(dataUri);
+    props.onClickTakePicture();
   };
 
-  render() {
-    return (
-      <div className="camera">
-        <Camera
-          onTakePhotoAnimationDone={(dataUri) => {
-            return this.handleTakePhoto(dataUri);
-          }}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="camera">
+      <Camera
+        onTakePhotoAnimationDone={(dataUri) => {
+          handleTakePhoto(dataUri);
+        }}
+      />
+    </div>
+  );
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -18,37 +18,35 @@ import { connect } from "react-redux";
 import { FLOW_MODES } from "./constant";
 import "./main.css";
 
-class Calendar extends React.Component {
-  render() {
-    const { pageID } = this.props;
-    const pages = [
-      <StartPage />,
-      <MonthView />,
-      <MonthView />,
-      <DayView mode={FLOW_MODES.flow1} />,
-      <DayView mode={FLOW_MODES.flow2} />,
-      <SearchCustomer />,
-      <ManualCustomer />,
-      <LicensePlate />,
-      <LastInformation />,
-      <Picture />,
-      <CameraView />,
-      <TermsConditions />,
-      <Signature />,
-      <NewAppointment />,
-      <AppointmentView mode={1} />,
-      <AppointmentView mode={2} />,
-      <Success />,
-    ];
+function Calendar(props) {
+  const { pageID } = props;
+  const pages = [
+    <StartPage />,
+    <MonthView />,
+    <MonthView />,
+    <DayView mode={FLOW_MODES.flow1} />,
+    <DayView mode={FLOW_MODES.flow2} />,
+    <SearchCustomer />,
+    <ManualCustomer />,
+    <LicensePlate />,
+    <LastInformation />,
+    <Picture />,
+    <CameraView />,
+    <TermsConditions />,
+    <Signature />,
+    <NewAppointment />,
+    <AppointmentView mode={1} />,
+    <AppointmentView mode={2} />,
+    <Success />,
+  ];
 
-    return (
-      <div className="main">
-        <SimpleViewSlider>
-          <div key={pageID}>{pages[pageID]}</div>
-        </SimpleViewSlider>
-      </div>
-    );
-  }
+  return (
+    <div className="main">
+      <SimpleViewSlider>
+        <div key={pageID}>{pages[pageID]}</div>
+      </SimpleViewSlider>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
