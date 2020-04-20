@@ -9,46 +9,46 @@ import {
   BUTTON_LABELS,
   HEADERS,
   INPUT_LABELS,
-  BUTTON_MODES
+  BUTTON_MODES,
 } from "../constant";
 
-class ManualCustomer extends React.Component {
-  render() {
-    const { onClickContinue } = this.props;
-    const InputsView = (
-      <div className="input-fields p-3 text-center">
-        <FlowInput label={INPUT_LABELS.firstName} />
-        <FlowInput label={INPUT_LABELS.lastName} />
-        <FlowInput label={INPUT_LABELS.street} />
-        <FlowInput label={INPUT_LABELS.house} />
-        <FlowInput label={INPUT_LABELS.zipCode} />
-        <FlowInput label={INPUT_LABELS.city} />
-      </div>
-    );
+function ManualCustomer(props) {
+  // render() {
+  const { onClickContinue } = props;
+  const InputsView = (
+    <div className="input-fields p-3 text-center">
+      <FlowInput label={INPUT_LABELS.firstName} />
+      <FlowInput label={INPUT_LABELS.lastName} />
+      <FlowInput label={INPUT_LABELS.street} />
+      <FlowInput label={INPUT_LABELS.house} />
+      <FlowInput label={INPUT_LABELS.zipCode} />
+      <FlowInput label={INPUT_LABELS.city} />
+    </div>
+  );
 
-    const ButtonView = (
-      <div className="text-center mt-3">
-        <GeneralButton
-          label={BUTTON_LABELS.continue}
-          mode={BUTTON_MODES.confirm}
-          onClick={onClickContinue}
-        />
-      </div>
-    );
+  const ButtonView = (
+    <div className="text-center mt-3">
+      <GeneralButton
+        label={BUTTON_LABELS.continue}
+        mode={BUTTON_MODES.confirm}
+        onClick={onClickContinue}
+      />
+    </div>
+  );
 
-    return (
-      <div className="p-4">
-        <MainHeader title={HEADERS.manualDriverInfo} />
-        {InputsView}
-        {ButtonView}
-      </div>
-    );
-  }
+  return (
+    <div className="p-4">
+      <MainHeader title={HEADERS.manualDriverInfo} />
+      {InputsView}
+      {ButtonView}
+    </div>
+  );
 }
+// }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE))
+    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE)),
   };
 };
 
