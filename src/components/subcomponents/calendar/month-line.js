@@ -12,40 +12,40 @@ import {
 } from "../../constant";
 import { getResponsiveWidth } from "../../utils";
 
-class MonthLine extends React.Component {
-  handleClickDay = (id) => {
-    const selectedYear = this.props.year;
-    const selectedMon = this.props.month;
-    const selectedDay = this.getDaysArray(selectedYear, selectedMon)[id].day;
+function MonthLine(props) {
+  const handleClickDay = (id) => {
+    const selectedYear = props.year;
+    const selectedMon = props.month;
+    const selectedDay = getDaysArray(selectedYear, selectedMon)[id].day;
     const selectedDate = moment(
       new Date(selectedYear, selectedMon, selectedDay),
       DATE_FORMAT
     );
-    const { setDate, goToDayPageFlow1, goToDayPageFlow2 } = this.props;
+    const { setDate, goToDayPageFlow1, goToDayPageFlow2 } = props;
     setDate(selectedDate);
-    if (this.checkFlowisOne()) goToDayPageFlow1();
+    if (checkFlowisOne()) goToDayPageFlow1();
     else goToDayPageFlow2();
   };
 
-  checkFlowisOne() {
-    const { mode } = this.props;
+  function checkFlowisOne() {
+    const { mode } = props;
     return mode === modes.flow1;
   }
 
-  getDaysInMonth = (year, month) => {
+  const getDaysInMonth = (year, month) => {
     var monthStart = new Date(year, month, 1);
     var monthEnd = new Date(year, month + 1, 1);
     return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
   };
 
-  getDaysArray = (year, month) => {
+  const getDaysArray = (year, month) => {
     let weekNo = 0;
     let index = days[new Date(year, month, 1).toString().split(" ")[0]];
     let daysArray = [];
     const width = getResponsiveWidth();
     const height = 42;
 
-    for (let i = 0, l = this.getDaysInMonth(year, month); i < l; i++) {
+    for (let i = 0, l = getDaysInMonth(year, month); i < l; i++) {
       daysArray.push({
         day: i + 1,
         weekNo: weekNo,
@@ -68,33 +68,31 @@ class MonthLine extends React.Component {
     return daysArray;
   };
 
-  render() {
-    const { year, month } = this.props;
+  const { year, month } = props;
 
-    const HeaderView = <label className="month-header">{months[month]}</label>;
+  const HeaderView = <label className="month-header">{months[month]}</label>;
 
-    const DaysView = (
-      <div className="days">
-        {this.getDaysArray(year, month).map((dayObj, id) => (
-          <div
-            key={id}
-            className="position-absolute"
-            style={dayObj.position}
-            onClick={() => this.handleClickDay(id)}
-          >
-            {dayObj.day}
-          </div>
-        ))}
-      </div>
-    );
+  const DaysView = (
+    <div className="days">
+      {getDaysArray(year, month).map((dayObj, id) => (
+        <div
+          key={id}
+          className="position-absolute"
+          style={dayObj.position}
+          onClick={() => handleClickDay(id)}
+        >
+          {dayObj.day}
+        </div>
+      ))}
+    </div>
+  );
 
-    return (
-      <>
-        {HeaderView}
-        {DaysView}
-      </>
-    );
-  }
+  return (
+    <>
+      {HeaderView}
+      {DaysView}
+    </>
+  );
 }
 
 const mapStateToProps = (state) => {

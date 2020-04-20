@@ -10,14 +10,14 @@ import {
   DATE_FORMAT,
 } from "../../constant";
 
-class Appointments extends React.Component {
-  appointmentsRef = createRef();
+function Appointments(props) {
+  let appointmentsRef = createRef();
 
-  getAppointmentsBySelectedDate() {
-    const { appointments, selectedDate } = this.props;
+  function getAppointmentsBySelectedDate() {
+    const { appointments, selectedDate } = props;
     if (!selectedDate) return [];
     if (!Array.isArray(appointments)) {
-      return this.convertToArray(appointments).filter((event) => {
+      return convertToArray(appointments).filter((event) => {
         return (
           moment(event.start.split("T")[0], DATE_FORMAT).date() ===
           moment(selectedDate, DATE_FORMAT).date()
@@ -27,7 +27,7 @@ class Appointments extends React.Component {
     return [];
   }
 
-  convertToArray = (obj) => {
+  const convertToArray = (obj) => {
     return Object.keys(obj).map((key) => {
       return {
         start: obj[key].event.start,
@@ -39,14 +39,14 @@ class Appointments extends React.Component {
     });
   };
 
-  getStartPosFrom(e) {
+  function getStartPosFrom(e) {
     if (!e) return 0;
-    const mins = this.convertToMins(e.start.split("T")[1].split(":"));
+    const mins = convertToMins(e.start.split("T")[1].split(":"));
     const pxPerMin = SLOT_CONFIG.heightPerThirtyMins / SLOT_CONFIG.nextSlot;
     return pxPerMin * mins;
   }
 
-  getHeightFrom(e) {
+  function getHeightFrom(e) {
     if (!e) return 0;
 
     // const direction =
@@ -55,34 +55,34 @@ class Appointments extends React.Component {
     //     ? -1
     //     : 1;
     // console.log(direction);
-    const startMins = this.convertToMins(e.start.split("T")[1].split(":"));
-    const endMins = this.convertToMins(e.end.split("T")[1].split(":"));
+    const startMins = convertToMins(e.start.split("T")[1].split(":"));
+    const endMins = convertToMins(e.end.split("T")[1].split(":"));
     const pxPerMin = SLOT_CONFIG.heightPerThirtyMins / SLOT_CONFIG.nextSlot;
     return pxPerMin * Math.abs(endMins - startMins);
   }
 
-  convertToMins(arr) {
+  function convertToMins(arr) {
     return parseInt(arr[0] * MINS_PER_HOUR) + parseInt(arr[1]);
   }
 
-  onClickAppointment = (event, e) => {
+  const onClickAppointment = (event, e) => {
     event.stopPropagation();
-    if (e.car.isRegistered === true) this.props.gotoAppointmentView1();
-    else this.props.gotoAppointmentView2();
+    if (e.car.isRegistered === true) props.gotoAppointmentView1();
+    else props.gotoAppointmentView2();
   };
 
-  onClickOutside = (e) => {
+  const onClickOutside = (e) => {
     const paddingOffset = 16;
-    const offsetTop = this.appointmentsRef.current.offsetTop;
-    const scrollTop = this.appointmentsRef.current.firstElementChild.scrollTop;
-    const timeSlot = this.calculateTimeFromPos(
+    const offsetTop = appointmentsRef.current.offsetTop;
+    const scrollTop = appointmentsRef.current.firstElementChild.scrollTop;
+    const timeSlot = calculateTimeFromPos(
       e.pageY - offsetTop - paddingOffset + scrollTop
     );
-    this.props.setTimeSlot(timeSlot);
-    this.props.gotoNewAppointment();
+    props.setTimeSlot(timeSlot);
+    props.gotoNewAppointment();
   };
 
-  calculateTimeFromPos(offsetY) {
+  function calculateTimeFromPos(offsetY) {
     const step = Math.floor(offsetY / SLOT_CONFIG.heightPerThirtyMins);
     const timeObj = {
       startTime: `${
@@ -99,67 +99,65 @@ class Appointments extends React.Component {
     return timeObj;
   }
 
-  render() {
-    const slots = () => {
-      let slots = [];
+  const slots = () => {
+    let slots = [];
 
-      let slotTime = moment(SLOT_CONFIG.startTime, "HH:mm");
-      let endTime = moment(SLOT_CONFIG.endTime, "HH:mm");
-      while (slotTime < endTime) {
-        slots.push(slotTime.format("HH:mm"));
-        slotTime = slotTime.add(SLOT_CONFIG.nextSlot, "minutes");
-      }
-      return slots;
+    let slotTime = moment(SLOT_CONFIG.startTime, "HH:mm");
+    let endTime = moment(SLOT_CONFIG.endTime, "HH:mm");
+    while (slotTime < endTime) {
+      slots.push(slotTime.format("HH:mm"));
+      slotTime = slotTime.add(SLOT_CONFIG.nextSlot, "minutes");
+    }
+    return slots;
+  };
+
+  const styleEvent = (event) => {
+    let heightOfEventItem = getHeightFrom(event);
+    let startPosOfEventItem = getStartPosFrom(event);
+    const backgroundColorOfEvent =
+      event.internal === true
+        ? COLOR_SCHEMA.blueBackground
+        : COLOR_SCHEMA.greyBackground;
+    const paddingTop = 16;
+    return {
+      transform: `translateY(${startPosOfEventItem + paddingTop}px)`,
+      height: `${heightOfEventItem}px`,
+      backgroundColor: `${backgroundColorOfEvent}`,
     };
+  };
 
-    const styleEvent = (event) => {
-      let heightOfEventItem = this.getHeightFrom(event);
-      let startPosOfEventItem = this.getStartPosFrom(event);
-      const backgroundColorOfEvent =
-        event.internal === true
-          ? COLOR_SCHEMA.blueBackground
-          : COLOR_SCHEMA.greyBackground;
-      const paddingTop = 16;
-      return {
-        transform: `translateY(${startPosOfEventItem + paddingTop}px)`,
-        height: `${heightOfEventItem}px`,
-        backgroundColor: `${backgroundColorOfEvent}`,
-      };
-    };
+  const styleHrLines = {
+    marginBottom: `${SLOT_CONFIG.heightPerThirtyMins - 1}px`,
+  };
 
-    const styleHrLines = {
-      marginBottom: `${SLOT_CONFIG.heightPerThirtyMins - 1}px`,
-    };
+  const AppointmentsView = (
+    <div className="appointment">
+      <ul className="views" onClick={(e) => onClickOutside(e)}>
+        {getAppointmentsBySelectedDate().map((event, i) => (
+          <div
+            key={i}
+            className="event-view"
+            style={styleEvent(event)}
+            onClick={(e) => onClickAppointment(e, event)}
+          >
+            <span>{event.subject}</span>
+          </div>
+        ))}
 
-    const AppointmentsView = (
-      <div className="appointment">
-        <ul className="views" onClick={(e) => this.onClickOutside(e)}>
-          {this.getAppointmentsBySelectedDate().map((event, i) => (
-            <div
-              key={i}
-              className="event-view"
-              style={styleEvent(event)}
-              onClick={(e) => this.onClickAppointment(e, event)}
-            >
-              <span>{event.subject}</span>
-            </div>
-          ))}
+        {slots().map((i) => (
+          <li key={i} className="hr-line" style={styleHrLines}>
+            <span>{i}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 
-          {slots().map((i) => (
-            <li key={i} className="hr-line" style={styleHrLines}>
-              <span>{i}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-
-    return (
-      <div className="appointments" ref={this.appointmentsRef}>
-        {AppointmentsView}
-      </div>
-    );
-  }
+  return (
+    <div className="appointments" ref={appointmentsRef}>
+      {AppointmentsView}
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {

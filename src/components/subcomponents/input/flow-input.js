@@ -1,16 +1,14 @@
 import React from "react";
 
-export default class FlowInput extends React.Component {
-  render() {
-    const { mode, label } = this.props;
+export default function FlowInput(props) {
+  const { mode, label } = props;
 
-    const InputView =
-      mode === "datetime" ? (
-        <input type="datetime" placeholder={label} />
-      ) : (
-        <input type="text" placeholder={label} />
-      );
+  const InputView =
+    mode === "datetime" ? (
+      <input type="datetime" placeholder={label} />
+    ) : (
+      <input type="text" placeholder={label} />
+    );
 
-    return <div className="flow-input">{InputView}</div>;
-  }
+  return <div className="flow-input">{InputView}</div>;
 }
