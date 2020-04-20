@@ -8,40 +8,38 @@ import {
   DESCRIPTIONS,
   BUTTON_LABELS,
   HEADERS,
-  BUTTON_MODES
+  BUTTON_MODES,
 } from "../constant";
 
-class Success extends React.Component {
-  render() {
-    const DescriptionView = (
-      <div className="p-5">
-        <p>{DESCRIPTIONS.success}</p>
-      </div>
-    );
+function Success(props) {
+  const DescriptionView = (
+    <div className="p-5">
+      <p>{DESCRIPTIONS.success}</p>
+    </div>
+  );
 
-    const SuccessButton = (
-      <div className="continue-button text-center">
-        <GeneralButton
-          label={BUTTON_LABELS.close}
-          mode={BUTTON_MODES.confirm}
-          onClick={this.props.onClickDone}
-        />
-      </div>
-    );
+  const SuccessButton = (
+    <div className="continue-button text-center">
+      <GeneralButton
+        label={BUTTON_LABELS.close}
+        mode={BUTTON_MODES.confirm}
+        onClick={props.onClickDone}
+      />
+    </div>
+  );
 
-    return (
-      <div className="p-4">
-        <MainHeader title={HEADERS.done} />
-        {DescriptionView}
-        {SuccessButton}
-      </div>
-    );
-  }
+  return (
+    <div className="p-4">
+      <MainHeader title={HEADERS.done} />
+      {DescriptionView}
+      {SuccessButton}
+    </div>
+  );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onClickDone: () => dispatch(setPageID(PAGE_INDEX.START_PAGE))
+    onClickDone: () => dispatch(setPageID(PAGE_INDEX.START_PAGE)),
   };
 };
 

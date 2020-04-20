@@ -1,84 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setPageID, setSignature } from "../../store/actions";
 import { PAGE_INDEX, HEADERS, BUTTON_LABELS } from "../constant";
 import SignatureCanvas from "react-signature-canvas";
 
-class Signature extends React.Component {
-  state = {
-    clientWidth: 0,
-    clientHeight: 0
+function Signature(props) {
+  const [clientWidth, setClientWidth] = useState(0);
+  const [clientHeight, setClientHeight] = useState(0);
+
+  useEffect(() => {
+    updateClientRect();
+    window.addEventListener("resize", updateClientRect);
+    return function cleanup() {
+      window.removeEventListener("resize", updateClientRect);
+    };
+  });
+
+  const updateClientRect = () => {
+    setClientWidth(window.innerWidth);
+    setClientHeight(window.innerHeight);
   };
 
-  componentDidMount() {
-    this.updateClientRect();
-    window.addEventListener("resize", this.updateClientRect);
-  }
+  let sigPad = {};
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateClientRect);
-  }
-
-  updateClientRect = () => {
-    this.setState({
-      clientWidth: window.innerWidth,
-      clientHeight: window.innerHeight
-    });
+  const clear = () => {
+    sigPad.clear();
   };
 
-  sigPad = {};
-
-  clear = () => {
-    this.sigPad.clear();
+  const onClickContinue = () => {
+    props.saveSignature(sigPad.getTrimmedCanvas().toDataURL("image/png"));
+    props.onClickContinue();
   };
 
-  onClickContinue = () => {
-    this.props.saveSignature(
-      this.sigPad.getTrimmedCanvas().toDataURL("image/png")
-    );
-    this.props.onClickContinue();
-  };
+  const HeaderView = (
+    <div className="rotated-header d-flex">
+      <p>{HEADERS.flipPhoneToSign}</p>
+      <button onClick={onClickContinue}>{BUTTON_LABELS.continue}</button>
+    </div>
+  );
 
-  render() {
-    const HeaderView = (
-      <div className="rotated-header d-flex">
-        <p>{HEADERS.flipPhoneToSign}</p>
-        <button onClick={this.onClickContinue}>{BUTTON_LABELS.continue}</button>
-      </div>
-    );
+  const SignatureView = (
+    <SignatureCanvas
+      penColor="blue"
+      canvasProps={{ width: clientWidth, height: clientHeight }}
+      ref={(ref) => {
+        sigPad = ref;
+      }}
+    />
+  );
 
-    const { clientWidth, clientHeight } = this.state;
+  const ClearSignature = (
+    <button className="clear-sign" onClick={clear}>
+      Clear
+    </button>
+  );
 
-    const SignatureView = (
-      <SignatureCanvas
-        penColor="blue"
-        canvasProps={{ width: clientWidth, height: clientHeight }}
-        ref={ref => {
-          this.sigPad = ref;
-        }}
-      />
-    );
-
-    const ClearSignature = (
-      <button className="clear-sign" onClick={this.clear}>
-        Clear
-      </button>
-    );
-
-    return (
-      <div className="p-4 position-relative w-100 vh-100 signature">
-        {HeaderView}
-        {SignatureView}
-        {ClearSignature}
-      </div>
-    );
-  }
+  return (
+    <div className="p-4 position-relative w-100 vh-100 signature">
+      {HeaderView}
+      {SignatureView}
+      {ClearSignature}
+    </div>
+  );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    saveSignature: url => dispatch(setSignature(url)),
-    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.DONE))
+    saveSignature: (url) => dispatch(setSignature(url)),
+    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.DONE)),
   };
 };
 

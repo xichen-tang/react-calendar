@@ -10,16 +10,30 @@ function CameraView(props) {
     props.onClickTakePicture();
   };
 
+  const handleCameraError = (err) => {
+    if (props.pageID === PAGE_INDEX.CAMERA_VIEW) {
+      console.log(err);
+      setTimeout(() => {
+        props.onClickTakePicture();
+      }, 3000);
+    }
+  };
+
   return (
     <div className="camera">
       <Camera
         onTakePhotoAnimationDone={(dataUri) => {
           handleTakePhoto(dataUri);
         }}
+        onCameraError={(error) => handleCameraError(error)}
       />
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return { pageID: state.pageID };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -29,4 +43,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CameraView);
+export default connect(mapStateToProps, mapDispatchToProps)(CameraView);
