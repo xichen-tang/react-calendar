@@ -1,16 +1,11 @@
 import React from "react";
 
-export default class GeneralButton extends React.Component {
-  render() {
-    const generalBtnClass = "general-btn m-3 ";
+export default function GeneralButton(props) {
+  const generalBtnClass = "general-btn m-3 ";
 
-    return (
-      <button
-        className={generalBtnClass + this.props.mode}
-        onClick={this.props.onClick}
-      >
-        {this.props.label}
-      </button>
-    );
-  }
+  return (
+    <button className={generalBtnClass + props.mode} onClick={props.onClick}>
+      {props.label}
+    </button>
+  );
 }

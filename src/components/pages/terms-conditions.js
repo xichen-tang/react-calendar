@@ -9,51 +9,49 @@ import {
   HEADERS,
   SUB_HEADERS,
   DESCRIPTIONS,
-  PAGE_INDEX
+  PAGE_INDEX,
 } from "../constant";
 
-class TermsConditions extends React.Component {
-  render() {
-    const TermsConditionsView = (
-      <div className="p-5">
-        <div className="header p-2">{SUB_HEADERS.termsAndConditions}</div>
-        <div className="body mt-3">
-          {DESCRIPTIONS.termsAndConditions.map((desc, id) => (
-            <p key={id}>{desc}</p>
-          ))}
-        </div>
+function TermsConditions(props) {
+  const TermsConditionsView = (
+    <div className="p-5">
+      <div className="header p-2">{SUB_HEADERS.termsAndConditions}</div>
+      <div className="body mt-3">
+        {DESCRIPTIONS.termsAndConditions.map((desc, id) => (
+          <p key={id}>{desc}</p>
+        ))}
       </div>
-    );
+    </div>
+  );
 
-    const YesNoButtons = (
-      <div className="d-flex justify-content-between my-3 mx-4">
-        <GeneralButton
-          label={BUTTON_LABELS.no}
-          mode={BUTTON_MODES.confirm}
-          onClick={this.props.onClickYes}
-        />
-        <GeneralButton
-          label={BUTTON_LABELS.yes}
-          mode={BUTTON_MODES.confirm}
-          onClick={this.props.onClickNo}
-        />
-      </div>
-    );
+  const YesNoButtons = (
+    <div className="d-flex justify-content-between my-3 mx-4">
+      <GeneralButton
+        label={BUTTON_LABELS.no}
+        mode={BUTTON_MODES.confirm}
+        onClick={props.onClickYes}
+      />
+      <GeneralButton
+        label={BUTTON_LABELS.yes}
+        mode={BUTTON_MODES.confirm}
+        onClick={props.onClickNo}
+      />
+    </div>
+  );
 
-    return (
-      <div className="p-4">
-        <MainHeader title={HEADERS.termsAndConditions} />
-        {TermsConditionsView}
-        {YesNoButtons}
-      </div>
-    );
-  }
+  return (
+    <div className="p-4">
+      <MainHeader title={HEADERS.termsAndConditions} />
+      {TermsConditionsView}
+      {YesNoButtons}
+    </div>
+  );
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onClickYes: () => dispatch(setPageID(PAGE_INDEX.SIGNATURE)),
-    onClickNo: () => dispatch(setPageID(PAGE_INDEX.START_PAGE))
+    onClickNo: () => dispatch(setPageID(PAGE_INDEX.START_PAGE)),
   };
 };
 
