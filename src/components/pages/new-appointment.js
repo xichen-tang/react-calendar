@@ -15,59 +15,54 @@ import {
   DATE_FORMAT,
 } from "../constant";
 
-class NewAppointment extends React.Component {
-  render() {
-    const {
-      selectedDate,
-      appointmentTime,
-      gotoStartPage,
-      gotoDayView,
-    } = this.props;
-    const yr = moment(selectedDate, DATE_FORMAT).year();
-    const mon = moment(selectedDate, DATE_FORMAT).month();
-    const wk = moment(selectedDate, DATE_FORMAT).day();
-    const day = moment(selectedDate, DATE_FORMAT).date();
+function NewAppointment(props) {
+  // render() {
+  const { selectedDate, appointmentTime, gotoStartPage, gotoDayView } = props;
+  const yr = moment(selectedDate, DATE_FORMAT).year();
+  const mon = moment(selectedDate, DATE_FORMAT).month();
+  const wk = moment(selectedDate, DATE_FORMAT).day();
+  const day = moment(selectedDate, DATE_FORMAT).date();
 
-    const HeaderView = <MainHeader title={HEADERS.calendar} />;
+  const HeaderView = <MainHeader title={HEADERS.calendar} />;
 
-    const startTimeLabel =
-      formatDate(yr, mon, wk, day) + "kl " + appointmentTime.startTime;
-    const endTimeLabel =
-      formatDate(yr, mon, wk, day) + "kl " + appointmentTime.endTime;
+  const startTimeLabel =
+    formatDate(yr, mon, wk, day) + "kl " + appointmentTime.startTime;
+  const endTimeLabel =
+    formatDate(yr, mon, wk, day) + "kl " + appointmentTime.endTime;
 
-    const InputsView = (
-      <div className="input-fields p-3 text-center">
-        <label className="appointment-title">
-          {SUB_HEADERS.appointmentSubject}
-        </label>
-        <FlowInput label={startTimeLabel} mode="datetime" />
-        <FlowInput label={endTimeLabel} mode="datetime" />
-      </div>
-    );
+  const InputsView = (
+    <div className="input-fields p-3 text-center">
+      <label className="appointment-title">
+        {SUB_HEADERS.appointmentSubject}
+      </label>
+      <FlowInput label={startTimeLabel} mode="datetime" />
+      <FlowInput label={endTimeLabel} mode="datetime" />
+    </div>
+  );
 
-    const ButtonView = (
-      <div className="text-center mt-3">
-        <GeneralButton
-          label={BUTTON_LABELS.save}
-          mode={BUTTON_MODES.confirm}
-          onClick={gotoStartPage}
-        />
-        <GeneralButton
-          label={BUTTON_LABELS.cancel}
-          mode={BUTTON_MODES.manual}
-          onClick={gotoDayView}
-        />
-      </div>
-    );
+  const ButtonView = (
+    <div className="text-center mt-3">
+      <GeneralButton
+        label={BUTTON_LABELS.save}
+        mode={BUTTON_MODES.confirm}
+        onClick={gotoStartPage}
+      />
+      <GeneralButton
+        label={BUTTON_LABELS.cancel}
+        mode={BUTTON_MODES.manual}
+        onClick={gotoDayView}
+      />
+    </div>
+  );
 
-    return (
-      <div className="p-4">
-        {HeaderView}
-        {InputsView}
-        {ButtonView}
-      </div>
-    );
-  }
+  return (
+    <div className="p-4">
+      {HeaderView}
+      {InputsView}
+      {ButtonView}
+    </div>
+  );
+  // }
 }
 
 const mapStateToProps = (state) => {
