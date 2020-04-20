@@ -16,41 +16,25 @@ import {
 } from "../constant";
 
 function LastInformation(props) {
-  // state = {
-  //   mode: "",
-  //   showDurationPicker: false,
-  //   hours: 0,
-  //   minutes: 0
-  // };
-
   const [mode, setMode] = useState(PERSONAL_MODES[0]);
   const [durationPickerVisibility, showDurationPicker] = useState(false);
   const [durationHours, setHours] = useState(0);
   const [durationMinutes, setMinutes] = useState(0);
 
-  // componentDidMount() {
-  //   this.setState({ mode: PERSONAL_MODES[0] });
-  // }
-
   const onModeChange = (e) => {
-    // this.setState({ mode: e.target.value });
     setMode(e.target.value);
   };
 
   const onChange = (duration) => {
-    // const { hours, minutes } = duration;
-    // this.setState({ hours, minutes });
     setHours(duration.hours);
     setMinutes(duration.minutes);
   };
 
   const closeDuration = () => {
-    // this.setState({ showDurationPicker: false });
     showDurationPicker(false);
   };
 
   const showDuration = () => {
-    // this.setState({ showDurationPicker: true });
     showDurationPicker(true);
   };
 
@@ -61,9 +45,6 @@ function LastInformation(props) {
   const isChecked = (newMode) => {
     return mode === newMode;
   };
-
-  // render() {
-  // const { mode, showDurationPicker } = this.state;
 
   const PersonalInfoView = (
     <div className="last-information pt-5 px-4">
@@ -170,7 +151,6 @@ function LastInformation(props) {
       {ConfirmView}
     </div>
   );
-  // }
 }
 
 const mapDispatchToProps = (dispatch) => {

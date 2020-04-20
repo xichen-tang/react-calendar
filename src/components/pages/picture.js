@@ -12,36 +12,34 @@ import {
 import { setPageID } from "../../store/actions";
 import { PAGE_INDEX } from "../constant";
 
-class Picture extends React.Component {
-  onClickCameraView = () => {
-    this.props.goToCameraView();
+function Picture(props) {
+  const onClickCameraView = () => {
+    props.goToCameraView();
   };
 
-  render() {
-    const DescriptionView = (
-      <div className="description p-4">{DESCRIPTIONS.takePicture}</div>
-    );
+  const DescriptionView = (
+    <div className="description p-4">{DESCRIPTIONS.takePicture}</div>
+  );
 
-    const ContinueButton = (
-      <div className="continue-button text-center">
-        <GeneralButton
-          label={BUTTON_LABELS.camera}
-          mode={BUTTON_MODES.confirm}
-          onClick={this.onClickCameraView}
-        />
-      </div>
-    );
+  const ContinueButton = (
+    <div className="continue-button text-center">
+      <GeneralButton
+        label={BUTTON_LABELS.camera}
+        mode={BUTTON_MODES.confirm}
+        onClick={onClickCameraView}
+      />
+    </div>
+  );
 
-    const MainView = (
-      <>
-        <MainHeader title={HEADERS.takePicture} />
-        {DescriptionView}
-        {ContinueButton}
-      </>
-    );
+  const MainView = (
+    <>
+      <MainHeader title={HEADERS.takePicture} />
+      {DescriptionView}
+      {ContinueButton}
+    </>
+  );
 
-    return <div className="p-4 position-relative w-100 vh-100">{MainView}</div>;
-  }
+  return <div className="p-4 position-relative w-100 vh-100">{MainView}</div>;
 }
 
 const mapDispatchToProps = (dispatch) => {

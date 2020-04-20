@@ -16,7 +16,6 @@ import {
 } from "../constant";
 
 function NewAppointment(props) {
-  // render() {
   const { selectedDate, appointmentTime, gotoStartPage, gotoDayView } = props;
   const yr = moment(selectedDate, DATE_FORMAT).year();
   const mon = moment(selectedDate, DATE_FORMAT).month();
@@ -62,7 +61,6 @@ function NewAppointment(props) {
       {ButtonView}
     </div>
   );
-  // }
 }
 
 const mapStateToProps = (state) => {

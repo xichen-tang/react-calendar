@@ -13,7 +13,6 @@ import {
 } from "../constant";
 
 function ManualCustomer(props) {
-  // render() {
   const { onClickContinue } = props;
   const InputsView = (
     <div className="input-fields p-3 text-center">
@@ -44,7 +43,6 @@ function ManualCustomer(props) {
     </div>
   );
 }
-// }
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -14,27 +14,18 @@ import {
 } from "../constant";
 
 function LicensePlate(props) {
-  // state = {
-  //   option: ""
-  // };
-
   // temporal data
   const options = ["BL 29", "FY 20", "BW 51 10", "BL 28"];
 
   const [option, setOption] = useState("");
 
   const onOptionChange = (e) => {
-    // this.setState({ option: e.target.value });
     setOption(e.target.value);
   };
 
   const isChecked = (newOption) => {
-    // return this.state.option === option;
     return option === newOption;
   };
-
-  // render() {
-  // const { option } = this.state;
 
   const styleOption = (opt) => {
     return option === opt
@@ -80,7 +71,6 @@ function LicensePlate(props) {
     </div>
   );
 }
-// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
