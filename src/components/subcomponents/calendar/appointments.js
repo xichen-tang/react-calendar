@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { setPageID, setTimeSlot } from "../../../store/actions";
 import {
@@ -10,11 +10,23 @@ import {
   DATE_FORMAT,
 } from "../../constant";
 
-function Appointments(props) {
+export default function Appointments() {
   let appointmentsRef = createRef();
+  const selectedDate = useSelector((state) => state.selectedDate);
+  const appointments = useSelector((state) => state.appointments);
+  const dispatch = useDispatch();
+  const convertToArray = (obj) =>
+    Object.keys(obj).map((key) => {
+      return {
+        start: obj[key].event.start,
+        end: obj[key].event.end,
+        subject: obj[key].event.subject,
+        internal: obj[key].event.internal,
+        car: obj[key].event.car,
+      };
+    });
 
   function getAppointmentsBySelectedDate() {
-    const { appointments, selectedDate } = props;
     if (!selectedDate) return [];
     if (!Array.isArray(appointments)) {
       return convertToArray(appointments).filter((event) => {
@@ -26,18 +38,6 @@ function Appointments(props) {
     }
     return [];
   }
-
-  const convertToArray = (obj) => {
-    return Object.keys(obj).map((key) => {
-      return {
-        start: obj[key].event.start,
-        end: obj[key].event.end,
-        subject: obj[key].event.subject,
-        internal: obj[key].event.internal,
-        car: obj[key].event.car,
-      };
-    });
-  };
 
   function getStartPosFrom(e) {
     if (!e) return 0;
@@ -67,8 +67,9 @@ function Appointments(props) {
 
   const onClickAppointment = (event, e) => {
     event.stopPropagation();
-    if (e.car.isRegistered === true) props.gotoAppointmentView1();
-    else props.gotoAppointmentView2();
+    if (e.car.isRegistered === true)
+      dispatch(setPageID(PAGE_INDEX.APPOINTMENT_1));
+    else dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2));
   };
 
   const onClickOutside = (e) => {
@@ -78,8 +79,9 @@ function Appointments(props) {
     const timeSlot = calculateTimeFromPos(
       e.pageY - offsetTop - paddingOffset + scrollTop
     );
-    props.setTimeSlot(timeSlot);
-    props.gotoNewAppointment();
+
+    dispatch(setTimeSlot(timeSlot));
+    dispatch(setPageID(PAGE_INDEX.NEW_APPOINTMENT));
   };
 
   function calculateTimeFromPos(offsetY) {
@@ -101,9 +103,9 @@ function Appointments(props) {
 
   const slots = () => {
     let slots = [];
-
     let slotTime = moment(SLOT_CONFIG.startTime, "HH:mm");
     let endTime = moment(SLOT_CONFIG.endTime, "HH:mm");
+
     while (slotTime < endTime) {
       slots.push(slotTime.format("HH:mm"));
       slotTime = slotTime.add(SLOT_CONFIG.nextSlot, "minutes");
@@ -159,21 +161,3 @@ function Appointments(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    selectedDate: state.selectedDate,
-    appointments: state.appointments,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    gotoNewAppointment: () => dispatch(setPageID(PAGE_INDEX.NEW_APPOINTMENT)),
-    gotoAppointmentView1: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_1)),
-    gotoAppointmentView2: () => dispatch(setPageID(PAGE_INDEX.APPOINTMENT_2)),
-    setTimeSlot: (timeObj) => dispatch(setTimeSlot(timeObj)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Appointments);

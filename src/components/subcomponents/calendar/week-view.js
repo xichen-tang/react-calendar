@@ -1,38 +1,31 @@
 import React, { createRef } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "../../../store/actions";
 import { dayIDsInWeek, getResponsiveWidth } from "../../utils";
 import { DATE_FORMAT } from "../../constant";
 import moment from "moment";
 
-function WeekView(props) {
-  const getDaysFromWeek = (week) => {
-    return dayIDsInWeek().map((d) => moment().week(week).day(d).date());
-  };
-
+export default function WeekView() {
+  const selectedDate = useSelector((state) => state.selectedDate);
   let weekViewRef = createRef();
-
-  const isDayChecked = (day) => {
-    const selectedDay = moment(props.selectedDate, DATE_FORMAT).date();
-    return selectedDay === day;
-  };
-
-  const onDayChange = (e) => {
-    const selectedDay = e.target.value;
-    const selected = moment(props.selectedDate, DATE_FORMAT);
-    updateDate(selected.year(), selected.month(), selectedDay);
-  };
-
-  function updateDate(yr, mon, day) {
-    const selectedDate = moment(new Date(yr, mon, day), DATE_FORMAT);
-    props.setDate(selectedDate);
-  }
-
   const width = getResponsiveWidth();
-  const { selectedDate } = props;
   const weekNo = moment(selectedDate, DATE_FORMAT).isoWeek();
   const selectedDay = moment(selectedDate, DATE_FORMAT).date();
+  const dispatch = useDispatch();
 
+  const getDaysFromWeek = (week) =>
+    dayIDsInWeek().map((d) => moment().week(week).day(d).date());
+  const isDayChecked = (day) =>
+    moment(selectedDate, DATE_FORMAT).date() === day;
+  const onDayChange = (e) => {
+    const selectedDay = e.target.value;
+    const selected = moment(selectedDate, DATE_FORMAT);
+    updateDate(selected.year(), selected.month(), selectedDay);
+  };
+  const updateDate = (yr, mon, day) => {
+    const selectedDate = moment(new Date(yr, mon, day), DATE_FORMAT);
+    dispatch(setDate(selectedDate));
+  };
   const styleDayPosition = (id, day) => {
     if (Math.abs(day - selectedDay) > 6) {
       return {
@@ -76,17 +69,3 @@ function WeekView(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    selectedDate: state.selectedDate,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setDate: (date) => dispatch(setDate(date)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeekView);

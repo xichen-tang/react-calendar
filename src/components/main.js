@@ -14,12 +14,13 @@ import Success from "./pages/success";
 import LastInformation from "./pages/last-information";
 import NewAppointment from "./pages/new-appointment";
 import AppointmentView from "./pages/view-appointment";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { FLOW_MODES } from "./constant";
 import "./main.css";
 
-function Calendar(props) {
-  const { pageID } = props;
+export default function Calendar() {
+  const pageID = useSelector((state) => state.pageID);
+
   const pages = [
     <StartPage />,
     <MonthView />,
@@ -48,11 +49,3 @@ function Calendar(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    pageID: state.pageID,
-  };
-};
-
-export default connect(mapStateToProps, null)(Calendar);

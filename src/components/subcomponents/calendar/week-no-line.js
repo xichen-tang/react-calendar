@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-function WeekNoLine(props) {
+export default function WeekNoLine(props) {
   function getWeeksNoArray(year, month) {
     const nextWeekNo = moment(new Date(year, month + 1, 0)).isoWeek();
     const prevWeekNo = moment(new Date(year, month, 1)).isoWeek();
@@ -36,5 +36,3 @@ function WeekNoLine(props) {
 
   return <div className="hrs">{WeeksNoView}</div>;
 }
-
-export default WeekNoLine;

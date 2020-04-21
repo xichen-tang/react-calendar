@@ -1,13 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FLOW_MODES as modes, PAGE_INDEX } from "../../constant";
 import { setPageID } from "../../../store/actions";
 
-function MainHeader(props) {
-  const { mode } = props;
+export default function MainHeader(props) {
+  const mode = useSelector((state) => state.mode);
+  const dispatch = useDispatch();
+  const handleCloseButton = () => dispatch(setPageID(PAGE_INDEX.START_PAGE));
 
   const CloseButton = (
-    <div className="close-btn" onClick={() => props.gotoStartPage()}>
+    <div className="close-btn" onClick={handleCloseButton}>
       <i className="fa fa-close"></i>
     </div>
   );
@@ -18,17 +20,3 @@ function MainHeader(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    mode: state.mode,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    gotoStartPage: () => dispatch(setPageID(PAGE_INDEX.START_PAGE)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainHeader);

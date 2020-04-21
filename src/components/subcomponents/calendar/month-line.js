@@ -1,6 +1,6 @@
 import React from "react";
 import { setDate, setPageID } from "../../../store/actions";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import {
   PAGE_INDEX,
@@ -12,7 +12,10 @@ import {
 } from "../../constant";
 import { getResponsiveWidth } from "../../utils";
 
-function MonthLine(props) {
+export default function MonthLine(props) {
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.mode);
+  const checkFlowisOne = () => mode === modes.flow1;
   const handleClickDay = (id) => {
     const selectedYear = props.year;
     const selectedMon = props.month;
@@ -21,20 +24,15 @@ function MonthLine(props) {
       new Date(selectedYear, selectedMon, selectedDay),
       DATE_FORMAT
     );
-    const { setDate, goToDayPageFlow1, goToDayPageFlow2 } = props;
-    setDate(selectedDate);
-    if (checkFlowisOne()) goToDayPageFlow1();
-    else goToDayPageFlow2();
+
+    dispatch(setDate(selectedDate));
+    if (checkFlowisOne()) dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2));
+    else dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2));
   };
 
-  function checkFlowisOne() {
-    const { mode } = props;
-    return mode === modes.flow1;
-  }
-
   const getDaysInMonth = (year, month) => {
-    var monthStart = new Date(year, month, 1);
-    var monthEnd = new Date(year, month + 1, 1);
+    let monthStart = new Date(year, month, 1);
+    let monthEnd = new Date(year, month + 1, 1);
     return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
   };
 
@@ -94,19 +92,3 @@ function MonthLine(props) {
     </>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    mode: state.mode,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setDate: (date) => dispatch(setDate(date)),
-    goToDayPageFlow1: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)),
-    goToDayPageFlow2: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_2_2)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MonthLine);
