@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPageID, setSignature } from "../../store/actions";
 import { PAGE_INDEX, HEADERS, BUTTON_LABELS } from "../constant";
 import SignatureCanvas from "react-signature-canvas";
 
-function Signature(props) {
+export default function Signature() {
   const [clientWidth, setClientWidth] = useState(0);
   const [clientHeight, setClientHeight] = useState(0);
+  let sigPad = {};
+
+  const dispatch = useDispatch();
+  const updateClientRect = () => {
+    setClientWidth(window.innerWidth);
+    setClientHeight(window.innerHeight);
+  };
+  const clear = () => sigPad.clear();
+  const onClickContinue = () => {
+    dispatch(setSignature(sigPad.getTrimmedCanvas().toDataURL("image/png")));
+    dispatch(setPageID(PAGE_INDEX.DONE));
+  };
 
   useEffect(() => {
     updateClientRect();
@@ -15,22 +27,6 @@ function Signature(props) {
       window.removeEventListener("resize", updateClientRect);
     };
   });
-
-  const updateClientRect = () => {
-    setClientWidth(window.innerWidth);
-    setClientHeight(window.innerHeight);
-  };
-
-  let sigPad = {};
-
-  const clear = () => {
-    sigPad.clear();
-  };
-
-  const onClickContinue = () => {
-    props.saveSignature(sigPad.getTrimmedCanvas().toDataURL("image/png"));
-    props.onClickContinue();
-  };
 
   const HeaderView = (
     <div className="rotated-header d-flex">
@@ -63,12 +59,3 @@ function Signature(props) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    saveSignature: (url) => dispatch(setSignature(url)),
-    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.DONE)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Signature);

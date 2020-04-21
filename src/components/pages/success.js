@@ -2,7 +2,7 @@ import React from "react";
 import MainHeader from "../subcomponents/header/main-header";
 import GeneralButton from "../subcomponents/button/general-btn";
 import { setPageID } from "../../store/actions";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   PAGE_INDEX,
   DESCRIPTIONS,
@@ -11,19 +11,21 @@ import {
   BUTTON_MODES,
 } from "../constant";
 
-function Success(props) {
+export default function Success(props) {
+  const dispatch = useDispatch();
+  const handleClickDone = () => dispatch(setPageID(PAGE_INDEX.START_PAGE));
+
   const DescriptionView = (
     <div className="p-5">
       <p>{DESCRIPTIONS.success}</p>
     </div>
   );
-
   const SuccessButton = (
     <div className="continue-button text-center">
       <GeneralButton
         label={BUTTON_LABELS.close}
         mode={BUTTON_MODES.confirm}
-        onClick={props.onClickDone}
+        onClick={handleClickDone}
       />
     </div>
   );
@@ -36,11 +38,3 @@ function Success(props) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClickDone: () => dispatch(setPageID(PAGE_INDEX.START_PAGE)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Success);

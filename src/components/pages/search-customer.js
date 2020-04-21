@@ -2,7 +2,7 @@ import React from "react";
 import MainHeader from "../subcomponents/header/main-header";
 import FlowInput from "../subcomponents/input/flow-input";
 import GeneralButton from "../subcomponents/button/general-btn";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
   PAGE_INDEX,
@@ -12,15 +12,18 @@ import {
   BUTTON_MODES,
 } from "../constant";
 
-function SearchCustomer(props) {
-  const { onClickSearchCustomer, onClickManualMode } = props;
+export default function SearchCustomer() {
+  const dispatch = useDispatch();
+  const onClickSearchCustomer = () =>
+    dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE));
+  const onClickManualMode = () =>
+    dispatch(setPageID(PAGE_INDEX.ENTER_CUSTOMER_MANUALLY));
 
   const InputView = (
     <div className="mt-4">
       <FlowInput label={INPUT_LABELS.ssn} />
     </div>
   );
-
   const ButtonsView = (
     <div className="buttons text-center">
       <GeneralButton
@@ -44,14 +47,3 @@ function SearchCustomer(props) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClickSearchCustomer: () =>
-      dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE)),
-    onClickManualMode: () =>
-      dispatch(setPageID(PAGE_INDEX.ENTER_CUSTOMER_MANUALLY)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SearchCustomer);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MainHeader from "../subcomponents/header/main-header";
 import FlowInput from "../subcomponents/input/flow-input";
 import GeneralButton from "../subcomponents/button/general-btn";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
   PAGE_INDEX,
@@ -13,25 +13,18 @@ import {
   BUTTON_MODES,
 } from "../constant";
 
-function LicensePlate(props) {
+export default function LicensePlate() {
   // temporal data
   const options = ["BL 29", "FY 20", "BW 51 10", "BL 28"];
-
   const [option, setOption] = useState("");
 
-  const onOptionChange = (e) => {
-    setOption(e.target.value);
-  };
-
-  const isChecked = (newOption) => {
-    return option === newOption;
-  };
-
-  const styleOption = (opt) => {
-    return option === opt
-      ? { backgroundColor: "#1c69d4", color: "#ffffff" }
-      : {};
-  };
+  const dispatch = useDispatch();
+  const onOptionChange = (e) => setOption(e.target.value);
+  const isChecked = (newOption) => option === newOption;
+  const styleOption = (opt) =>
+    option === opt ? { backgroundColor: "#1c69d4", color: "#ffffff" } : {};
+  const handleClickContinue = () =>
+    dispatch(setPageID(PAGE_INDEX.LAST_INFORMATIONS));
 
   const LicensePlateView = (
     <div className="options text-center">
@@ -51,11 +44,10 @@ function LicensePlate(props) {
       ))}
     </div>
   );
-
   const ContinueButton = (
     <div className="mt-4">
       <GeneralButton
-        onClick={props.onClickContinue}
+        onClick={handleClickContinue}
         label={BUTTON_LABELS.continue}
         mode={BUTTON_MODES.confirm}
       />
@@ -71,11 +63,3 @@ function LicensePlate(props) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.LAST_INFORMATIONS)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(LicensePlate);

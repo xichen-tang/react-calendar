@@ -1,20 +1,22 @@
 import React from "react";
 import Camera from "react-html5-camera-photo";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setPageID, setPhoto } from "../../store/actions";
 import { PAGE_INDEX } from "../constant";
 
-function CameraView(props) {
-  const handleTakePhoto = (dataUri) => {
-    props.setPhoto(dataUri);
-    props.onClickTakePicture();
-  };
+export default function CameraView() {
+  const dispatch = useDispatch();
+  const pageID = useSelector((state) => state.pageID);
 
+  const handleTakePhoto = (dataUri) => {
+    dispatch(setPhoto(dataUri));
+    dispatch(setPageID(PAGE_INDEX.TERMS_AND_CONDITIONS));
+  };
   const handleCameraError = (err) => {
-    if (props.pageID === PAGE_INDEX.CAMERA_VIEW) {
+    if (pageID === PAGE_INDEX.CAMERA_VIEW) {
       console.log(err);
       setTimeout(() => {
-        props.onClickTakePicture();
+        dispatch(setPageID(PAGE_INDEX.TERMS_AND_CONDITIONS));
       }, 3000);
     }
   };
@@ -30,17 +32,3 @@ function CameraView(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return { pageID: state.pageID };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setPhoto: (dataUri) => dispatch(setPhoto(dataUri)),
-    onClickTakePicture: () =>
-      dispatch(setPageID(PAGE_INDEX.TERMS_AND_CONDITIONS)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CameraView);

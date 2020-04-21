@@ -2,7 +2,7 @@ import React from "react";
 import "react-html5-camera-photo/build/css/index.css";
 import MainHeader from "../subcomponents/header/main-header";
 import GeneralButton from "../subcomponents/button/general-btn";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   DESCRIPTIONS,
   BUTTON_LABELS,
@@ -12,15 +12,13 @@ import {
 import { setPageID } from "../../store/actions";
 import { PAGE_INDEX } from "../constant";
 
-function Picture(props) {
-  const onClickCameraView = () => {
-    props.goToCameraView();
-  };
+export default function Picture() {
+  const dispatch = useDispatch();
+  const onClickCameraView = () => dispatch(setPageID(PAGE_INDEX.CAMERA_VIEW));
 
   const DescriptionView = (
     <div className="description p-4">{DESCRIPTIONS.takePicture}</div>
   );
-
   const ContinueButton = (
     <div className="continue-button text-center">
       <GeneralButton
@@ -31,21 +29,11 @@ function Picture(props) {
     </div>
   );
 
-  const MainView = (
-    <>
+  return (
+    <div className="p-4 position-relative w-100 vh-100">
       <MainHeader title={HEADERS.takePicture} />
       {DescriptionView}
       {ContinueButton}
-    </>
+    </div>
   );
-
-  return <div className="p-4 position-relative w-100 vh-100">{MainView}</div>;
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    goToCameraView: () => dispatch(setPageID(PAGE_INDEX.CAMERA_VIEW)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Picture);

@@ -2,7 +2,7 @@ import React from "react";
 import FlowInput from "../subcomponents/input/flow-input";
 import MainHeader from "../subcomponents/header/main-header";
 import GeneralButton from "../subcomponents/button/general-btn";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
   PAGE_INDEX,
@@ -12,8 +12,11 @@ import {
   BUTTON_MODES,
 } from "../constant";
 
-function ManualCustomer(props) {
-  const { onClickContinue } = props;
+export default function ManualCustomer() {
+  const dispatch = useDispatch();
+  const handleClickContinue = () =>
+    dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE));
+
   const InputsView = (
     <div className="input-fields p-3 text-center">
       <FlowInput label={INPUT_LABELS.firstName} />
@@ -24,13 +27,12 @@ function ManualCustomer(props) {
       <FlowInput label={INPUT_LABELS.city} />
     </div>
   );
-
   const ButtonView = (
     <div className="text-center mt-3">
       <GeneralButton
         label={BUTTON_LABELS.continue}
         mode={BUTTON_MODES.confirm}
-        onClick={onClickContinue}
+        onClick={handleClickContinue}
       />
     </div>
   );
@@ -43,11 +45,3 @@ function ManualCustomer(props) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.CHOOSE_LICENSE_PLATE)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ManualCustomer);

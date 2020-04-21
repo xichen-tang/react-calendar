@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import WeekLine from "../subcomponents/calendar/week-line";
 import MainHeader from "../subcomponents/header/main-header";
@@ -13,7 +14,6 @@ import {
   FLOW_MODES as modes,
   DATE_FORMAT,
 } from "../constant";
-import { connect } from "react-redux";
 import {
   getAvailableAppointments,
   getAvailableTimeSlots,
@@ -22,51 +22,40 @@ import {
 } from "../../store/actions";
 import BackCalendar from "../subcomponents/button/back-calendar";
 
-function DayView(props) {
-  useEffect(() => {
-    const {
-      getAvailableTimeSlots,
-      getAvailableAppointments,
-      setFlowMode1,
-      setFlowMode2,
-    } = props;
-    getAvailableTimeSlots();
-    getAvailableAppointments();
-    checkFlowisOne() ? setFlowMode1() : setFlowMode2();
-  });
-
-  function checkFlowisOne() {
-    const { mode } = props;
-    return mode === modes.flow1;
-  }
-
-  const { onBackMonth1, onBackMonth2, timeSlots, selectedDate } = props;
-
+export default function DayView(props) {
+  const timeSlots = useSelector((state) => state.timeSlots);
+  const selectedDate = useSelector((state) => state.selectedDate);
   const month = moment(selectedDate, DATE_FORMAT).month();
+  const dispatch = useDispatch();
+  const checkFlowisOne = () => props.mode === modes.flow1;
   const headerByFlow = checkFlowisOne()
     ? HEADERS.calendar
     : HEADERS.testDriveDate;
 
-  const HeaderView = <MainHeader title={headerByFlow} />;
-
   const onBackMonth = () =>
-    checkFlowisOne() ? onBackMonth1() : onBackMonth2();
+    checkFlowisOne()
+      ? dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_1_2))
+      : dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_2_2));
 
-  const WeeksView = (
-    <div className="weeks-view">
-      <WeekLine />
-      <WeekView />
-    </div>
-  );
+  useEffect(() => {
+    dispatch(getAvailableTimeSlots());
+    dispatch(getAvailableAppointments());
+    checkFlowisOne()
+      ? dispatch(setFlowMode(modes.flow1))
+      : dispatch(setFlowMode(modes.flow2));
+  });
 
+  const HeaderView = <MainHeader title={headerByFlow} />;
   const MainView = (
     <>
       <BackCalendar onClick={onBackMonth} label={months[month]} />
-      {WeeksView}
+      <div className="weeks-view">
+        <WeekLine />
+        <WeekView />
+      </div>
       <SelectedDate />
     </>
   );
-
   const SlotsView = checkFlowisOne() ? (
     <Appointments />
   ) : (
@@ -81,23 +70,3 @@ function DayView(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    timeSlots: state.timeSlots,
-    selectedDate: state.selectedDate,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setFlowMode1: () => dispatch(setFlowMode(modes.flow1)),
-    setFlowMode2: () => dispatch(setFlowMode(modes.flow2)),
-    onBackMonth1: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_1_2)),
-    onBackMonth2: () => dispatch(setPageID(PAGE_INDEX.MONTH_VIEW_2_2)),
-    getAvailableAppointments: () => dispatch(getAvailableAppointments()),
-    getAvailableTimeSlots: () => dispatch(getAvailableTimeSlots()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DayView);

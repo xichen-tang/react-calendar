@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MainHeader from "../subcomponents/header/main-header";
 import BackCalendar from "../subcomponents/button/back-calendar";
 import moment from "moment";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
   HEADERS,
@@ -13,39 +13,26 @@ import {
 } from "../constant";
 import GeneralButton from "../subcomponents/button/general-btn";
 
-function ViewAppointment(props) {
+export default function ViewAppointment(props) {
   const [inputType, setInputType] = useState("text");
   const [timeChangeVisibility, setTimeChangeVisibility] = useState(false);
-
-  const convertInputType = () => {
-    setInputType("datetime-local");
-  };
-
-  const onClickChangeTime = () => {
-    setTimeChangeVisibility(true);
-  };
-
-  const onClickCloseTime = () => {
-    setTimeChangeVisibility(false);
-    setInputType("text");
-  };
-
-  const { onBackDayView, selectedDate, mode } = props;
-
-  const HeaderView = <MainHeader title={HEADERS.calendar} />;
-
-  // Mandag 1. februar
+  const selectedDate = useSelector((state) => state.selectedDate);
   const mon = moment(selectedDate, DATE_FORMAT).month();
   const wk = moment(selectedDate, DATE_FORMAT).day();
   const day = moment(selectedDate, DATE_FORMAT).date();
   const aptDate = `${weeks[wk]} ${day}. ${months[mon]}`;
-  const BackView = <BackCalendar onClick={onBackDayView} label={aptDate} />;
-
   const yr = moment(selectedDate, DATE_FORMAT).year();
-  // data need to update backend
   const from = "01:00";
   const to = "01:30";
 
+  const dispatch = useDispatch();
+  const convertInputType = () => setInputType("datetime-local");
+  const onClickChangeTime = () => setTimeChangeVisibility(true);
+  const onClickCloseTime = () => setTimeChangeVisibility(false);
+  const onBackDayView = () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2));
+
+  const HeaderView = <MainHeader title={HEADERS.calendar} />;
+  const BackView = <BackCalendar onClick={onBackDayView} label={aptDate} />;
   const DetailView = (
     <div className="appointment-info">
       <div className="info">
@@ -69,7 +56,6 @@ function ViewAppointment(props) {
       </div>
     </div>
   );
-
   const beforeDateTimeView = (
     <>
       <div className="apt-btn" onClick={onClickChangeTime}>
@@ -80,7 +66,6 @@ function ViewAppointment(props) {
       <div className="apt-btn">Slet prøvekørsel</div>
     </>
   );
-
   const updateDateTimeView = (
     <>
       <div className="times">
@@ -106,44 +91,24 @@ function ViewAppointment(props) {
       />
     </>
   );
-
-  const ButtonsView = () => {
-    if (mode === 1) {
-      return (
-        <div className="appointment-btns text-center mt-5">
-          <div className="apt-btn">Ændre aftale</div>
-          <div className="apt-btn">Slet aftale</div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="appointment-btns text-center">
-          {timeChangeVisibility ? updateDateTimeView : beforeDateTimeView}
-        </div>
-      );
-    }
-  };
+  const ButtonsView =
+    props.mode === 1 ? (
+      <div className="appointment-btns text-center mt-5">
+        <div className="apt-btn">Ændre aftale</div>
+        <div className="apt-btn">Slet aftale</div>
+      </div>
+    ) : (
+      <div className="appointment-btns text-center">
+        {timeChangeVisibility ? updateDateTimeView : beforeDateTimeView}
+      </div>
+    );
 
   return (
     <div className="p-4">
       {HeaderView}
       {BackView}
       {DetailView}
-      {ButtonsView()}
+      {ButtonsView}
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    selectedDate: state.selectedDate,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onBackDayView: () => dispatch(setPageID(PAGE_INDEX.DAY_VIEW_1_2)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ViewAppointment);

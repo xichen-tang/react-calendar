@@ -4,7 +4,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 import MainHeader from "../subcomponents/header/main-header";
 import GeneralButton from "../subcomponents/button/general-btn";
 import FlowInput from "../subcomponents/input/flow-input";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPageID } from "../../store/actions";
 import {
   PAGE_INDEX,
@@ -15,36 +15,25 @@ import {
   BUTTON_MODES,
 } from "../constant";
 
-function LastInformation(props) {
+export default function LastInformation() {
   const [mode, setMode] = useState(PERSONAL_MODES[0]);
   const [durationPickerVisibility, showDurationPicker] = useState(false);
   const [durationHours, setHours] = useState(0);
   const [durationMinutes, setMinutes] = useState(0);
 
-  const onModeChange = (e) => {
-    setMode(e.target.value);
-  };
-
+  const dispatch = useDispatch();
+  const onModeChange = (e) => setMode(e.target.value);
   const onChange = (duration) => {
     setHours(duration.hours);
     setMinutes(duration.minutes);
   };
-
-  const closeDuration = () => {
-    showDurationPicker(false);
-  };
-
-  const showDuration = () => {
-    showDurationPicker(true);
-  };
-
-  const onChangeDuration = () => {
-    showDuration();
-  };
-
-  const isChecked = (newMode) => {
-    return mode === newMode;
-  };
+  const closeDuration = () => showDurationPicker(false);
+  const showDuration = () => showDurationPicker(true);
+  const onChangeDuration = () => showDuration();
+  const isChecked = (newMode) => mode === newMode;
+  const handleClickContinue = () => dispatch(setPageID(PAGE_INDEX.PICTURE));
+  const handleClickSaveAndClose = () =>
+    dispatch(setPageID(PAGE_INDEX.START_PAGE));
 
   const PersonalInfoView = (
     <div className="last-information pt-5 px-4">
@@ -127,14 +116,14 @@ function LastInformation(props) {
         <GeneralButton
           label={BUTTON_LABELS.continue}
           mode={BUTTON_MODES.confirm}
-          onClick={props.onClickContinue}
+          onClick={handleClickContinue}
         />
       </MobileView>
       <BrowserView>
         <GeneralButton
           label={BUTTON_LABELS.saveAndClose}
           mode={BUTTON_MODES.confirm}
-          onClick={props.onClickSaveAndClose}
+          onClick={handleClickSaveAndClose}
         />
       </BrowserView>
     </div>
@@ -152,12 +141,3 @@ function LastInformation(props) {
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClickContinue: () => dispatch(setPageID(PAGE_INDEX.PICTURE)),
-    onClickSaveAndClose: () => dispatch(setPageID(PAGE_INDEX.START_PAGE)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(LastInformation);
